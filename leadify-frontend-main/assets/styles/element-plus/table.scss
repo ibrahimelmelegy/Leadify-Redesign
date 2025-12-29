@@ -1,0 +1,9 @@
+@use '@/assets/styles/variables.scss' as *;
+
+.el-table th.el-table__cell.is-leaf {
+  --el-table-border: 2px solid var(--el-table-border-color) !important;
+}
+
+.el-table th.el-table__cell {
+  padding: 16px 0px !important;
+}

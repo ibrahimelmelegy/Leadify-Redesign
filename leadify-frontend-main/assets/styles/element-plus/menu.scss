@@ -1,0 +1,16 @@
+@use '@/assets/styles/variables.scss' as *;
+
+.el-menu {
+  --el-menu-item-height: 40px !important;
+  --el-menu-sub-item-height: 40px !important;
+  .el-menu-item,
+  .el-sub-menu__title {
+    margin-bottom: 5px;
+    border-radius: $raduis-base;
+    // height:$height-input ;
+    line-height: 22px !important;
+  }
+  .el-menu-item.is-active {
+    background-color: $primary-light;
+  }
+}

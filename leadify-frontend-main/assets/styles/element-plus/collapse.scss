@@ -1,0 +1,15 @@
+@use '@/assets/styles/variables.scss' as *;
+
+.el-collapse.custom-collapse {
+  --el-collapse-border-color: transparent !important;
+  --el-collapse-header-bg-color: transparent !important;
+  --el-collapse-content-bg-color: transparent !important;
+
+  --el-collapse-header-font-size: 24px !important;
+  .el-collapse-item__arrow {
+    font-size: 16px !important;
+  }
+  .el-collapse-item__header {
+    border-bottom: 1px solid $border !important;
+  }
+}

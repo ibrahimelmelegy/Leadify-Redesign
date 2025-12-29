@@ -1,0 +1,147 @@
+[dir='rtl'] {
+  #allTheNav {
+    .nav {
+      left: unset !important ;
+      right: 0;
+    }
+  }
+  .ql-editor {
+    text-align: right !important;
+  }
+  .marginedStart {
+    margin-left: unset !important;
+    margin-right: 260px !important;
+    .endBar {
+      padding-right: 260px;
+      padding-left: unset !important;
+    }
+  }
+  .collapseMargin {
+    margin-left: unset !important ;
+    margin-right: 80px !important;
+    .endBar {
+      padding-right: 80px;
+      padding-left: unset !important;
+    }
+  }
+
+  .vue-tel-input {
+    direction: ltr !important;
+    .vti__input {
+      padding-right: 24px;
+      direction: rtl;
+    }
+  }
+  .myicon {
+    margin-left: 5px !important;
+    margin-right: -6px !important;
+  }
+
+  // elment-plus
+
+  .el-menu.el-menu-vertical-demo {
+    border-left: solid 1px var(--el-menu-border-color);
+    padding-left: unset !important;
+    padding-right: 7px;
+
+    .el-sub-menu__icon-arrow {
+      left: var(--el-menu-base-level-padding);
+      right: unset !important;
+      margin-left: unset !important;
+    }
+    .el-sub-menu__title {
+      padding-left: unset !important;
+      padding-right: calc(
+        var(--el-menu-base-level-padding) + var(--el-menu-level) * var(--el-menu-level-padding)
+      ) !important;
+    }
+  }
+  .el-collapse-item__arrow {
+    margin: 0 auto 0 8px !important ;
+    transform: rotate(180deg);
+  }
+  .el-button + .el-button {
+    margin-left: unset !important;
+    margin-right: 12px !important;
+  }
+  .el-tabs__item {
+    &.is-top:nth-child(2) {
+      padding-right: 0px !important;
+      padding-left: 20px !important;
+    }
+    padding: 0 20px !important;
+  }
+  .el-dialog__headerbtn {
+    // right: unset !important;
+    // left: 0 !important;
+  }
+  .el-input-group__append {
+    border-top-left-radius: var(--el-input-border-radius) !important;
+    border-bottom-left-radius: var(--el-input-border-radius) !important;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .el-input-group--append > .el-input__wrapper {
+    border-top-right-radius: var(--el-input-border-radius) !important;
+    border-bottom-right-radius: var(--el-input-border-radius) !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+  }
+  .el-upload-list__item-status-label,
+  .el-upload-list__item .el-icon--close {
+    right: unset !important;
+    left: 16px !important;
+  }
+  .el-upload-list__item-name .el-icon {
+    margin-right: unset !important;
+    margin-left: 6px !important;
+  }
+  .el-checkbox__label {
+    padding-right: 8px !important;
+    padding-left: unset !important;
+  }
+  .el-input__prefix-inner > :last-child {
+    margin-left: 8px !important;
+    margin-right: unset !important;
+  }
+  .el-radio {
+    margin-right: unset !important;
+    margin-left: 32px !important;
+  }
+  .el-radio__label {
+    padding-right: 8px !important;
+    padding-left: unset !important;
+  }
+  .el-table .cell {
+    text-align: right;
+  }
+  .el-form-item__error {
+    left: unset !important;
+    right: 0 !important;
+  }
+  .el-tag {
+    padding-left: 5px !important;
+    padding-right: 9px !important;
+    .el-tag__close {
+      margin-left: unset !important;
+      margin-right: 6px !important;
+    }
+  }
+  .list-upload {
+    .el-upload-list--picture-card .el-upload-list__item {
+      margin-left: 8px !important;
+      margin-right: unset !important;
+    }
+  }
+  .el-upload-list--picture-card .el-upload-list__item-actions span + span {
+    margin-left: unset !important;
+    margin-right: 1rem !important;
+    .el-icon {
+      svg {
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
+}

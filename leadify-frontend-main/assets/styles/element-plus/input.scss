@@ -1,0 +1,73 @@
+@use '@/assets/styles/variables.scss' as *;
+
+.el-input--large .el-input__inner {
+  height: $height-input !important;
+}
+.el-input,
+.el-textarea,
+.el-select {
+  --el-input-border-radius: 1rem !important;
+  --el-border-color: #e7e6e9 !important;
+}
+
+.el-form-item__label,
+.el-select__wrapper {
+  text-align: unset !important;
+}
+.el-form-item__label {
+  padding: 0 !important;
+}
+.el-upload--picture-card {
+  background-color: white !important;
+}
+.el-upload-dragger {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  --el-upload-dragger-padding-horizontal: 0px !important;
+  --el-upload-dragger-padding-vertical: 0px !important;
+  border: none !important;
+}
+.el-upload-list__item {
+  border: none !important;
+}
+.el-textarea__inner {
+  padding: 20px !important;
+}
+.el-upload-dragger,
+.el-upload--picture-card,
+.el-upload-list--picture-card .el-upload-list__item {
+  width: 266px !important;
+  height: 177px !important;
+}
+.el-upload.el-upload--text {
+  border: 1px dashed var(--el-border-color) !important;
+  border-radius: 1rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+  width: 100% !important;
+  // height: 177px !important;
+  padding: 20px 0 !important;
+  flex-direction: column;
+  // text-align: center;
+  background: white;
+  border: 1px dashed gray;
+  &:hover {
+    border-color: var(--el-color-primary) !important;
+  }
+}
+.el-upload-list__item {
+  border-radius: $raduis-base !important;
+  @apply py-3 px-4;
+}
+
+.el-upload-list__item-status-label,
+.el-upload-list__item .el-icon--close {
+  right: 16px !important;
+}
+
+.el-checkbox.el-checkbox--large {
+  height: fit-content !important;
+}

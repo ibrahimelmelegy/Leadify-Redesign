@@ -1,0 +1,36 @@
+stages:
+  - deploy
+
+variables:
+  SERVER_USER: 'niqat'
+  SERVER_IP: '147.182.167.74'
+
+before_script:
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan $SERVER_IP >> ~/.ssh/known_hosts
+
+deploy_to_server_develop:
+  stage: deploy
+  script:
+    - ssh $SERVER_USER@$SERVER_IP "cd /home/niqat/public_html/staging/leadify-frontend && cp .env /tmp/leadify-staging-env && git pull && cp /tmp/leadify-staging-env .env"
+    - ssh $SERVER_USER@$SERVER_IP "cd /home/niqat/public_html/staging/leadify-frontend && rm -rf node_modules"
+    - ssh $SERVER_USER@$SERVER_IP "cd /home/niqat/public_html/staging/leadify-frontend && yarn install"
+    - ssh $SERVER_USER@$SERVER_IP "cd /home/niqat/public_html/staging/leadify-frontend && yarn build"
+    - ssh $SERVER_USER@$SERVER_IP "sudo systemctl restart staging-app_hp-tech.service"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+
+deploy_to_server_main:
+  stage: deploy
+  script:
+    - ssh $SERVER_USER@$SERVER_IP "cd /home/niqat/public_html/leadify-frontend && cp .env /tmp/leadify-env && git pull && cp /tmp/leadify-env .env"
+    - ssh $SERVER_USER@$SERVER_IP "cd /home/niqat/public_html/leadify-frontend && rm -rf node_modules"
+    - ssh $SERVER_USER@$SERVER_IP "cd /home/niqat/public_html/leadify-frontend && yarn install"
+    - ssh $SERVER_USER@$SERVER_IP "cd /home/niqat/public_html/leadify-frontend && yarn build"
+    - ssh $SERVER_USER@$SERVER_IP "sudo systemctl restart leadify-frontend.service"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'

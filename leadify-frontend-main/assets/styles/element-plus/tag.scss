@@ -1,0 +1,9 @@
+@use '@/assets/styles/variables.scss' as *;
+
+.el-tag.el-tag--info {
+  --el-tag-bg-color: #{$primary-light} !important;
+  --el-tag-border-color: #{$primary-light} !important;
+  --el-tag-hover-color: #{$primary-light-hover} !important ;
+  --el-tag-text-color: #{$primary} !important;
+  border-radius: $raduis-base !important;
+}

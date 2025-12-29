@@ -1,0 +1,33 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    env_file:
+      - .env # Use the same .env file for both services
+    environment:
+      POSTGRES_USER: leadify
+      POSTGRES_PASSWORD: x8tjNImGW7A4Dr
+      POSTGRES_DB: leadify
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: . #. means this docker-compose is inside the node api home directory, in this scenario, you can even abandon this option.
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env # Reference the .env file
+    working_dir: /usr/src/app
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start
+
+volumes:
+  db_data:
