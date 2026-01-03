@@ -1,27 +1,29 @@
 <template lang="pug">
-el-form(  autocomplete="off"   @submit.prevent='onSubmit'   ref="myForm" label-position="top"  :validationSchema="formSchema" )
-  slot
-  div(:class="{'2xl:w-1/2 w-[90%]  card m-auto bg-white p-10 rounded-3xl': !isModal}")
-      .grid.grid-cols-2.gap-3
-        InputText(label="Full Name"  name="name" :value="data?.name" )
-        InputSelect(label=" Nationality" name="nationality" :options="ManpowerNationalityOptions" :value="data?.nationality" )
-        InputText(label="Email"  name="email" :value="data?.email" @value="val=> isEmail = !!val" )
-        InputPhone(label=" Phone Number"  name="phone" :value="data?.phone" @validphone="val=> validPhone = val" mode="international" @value="val=> isPhone = !!val" )
-        InputSelect(label=" Role" name="role" isMultiple :options="manpowerRoles" :value="data?.role" )
-        InputSelect(label=" Availability Status" name="availabilityStatus" :options="manpowerAvailabilityStatus" :value="data?.availabilityStatus" )
-      InputText(label="Salary" placeholder="Enter Salary SAR" name="salary" :value="data?.salary" )
-      .grid.grid-cols-2.gap-3
-        InputText.mt-4(label="V. Allowance"  placeholder="Enter V. Allowance SAR" name="variableAllowance" :value="data?.variableAllowance" )
-        InputText.mt-4(label="T. Allowance"  placeholder="Enter T. Allowance SAR" name="transportationAllowance" :value="data?.transportationAllowance" )
-        InputText.mt-4(label="Iqama Cost"  placeholder="Enter Iqama Cost SAR" name="iqamaCost" :value="data?.iqamaCost" )
-        InputText.mt-4(label="EOF"  placeholder="Enter EOF SAR" name="endOfServiceBenefit" :value="data?.endOfServiceBenefit" )
-        InputText.mt-4(label="Saudization (optional)"  placeholder="Enter Saudization SAR" name="saudization" :value="data?.saudization" )
-        InputText.mt-4(label="Visa Fees (optional)"  placeholder="Enter Visa Fees SAR" name="visaFees" :value="data?.visaFees" )
-        InputText.mt-4(label="Incoming flight ticket (optional)"  placeholder="Enter Incoming flight ticket SAR" name="incomingFlightTicket" :value="data?.incomingFlightTicket" )
-        InputText.mt-4(label="Health insurance (optional)"  placeholder="Enter Health insurance SAR" name="healthInsurance" :value="data?.healthInsurance" )
-      InputText.mt-4(label="General Organization for Social Insurance (optional)"  placeholder="Enter General Organization for Social Insurance SAR" name="generalOrganizationForSocialInsurance" :value="data?.generalOrganizationForSocialInsurance" )
-      InputText.mt-4(type="textarea" placeholder="Enter Notes"  label="Additional Notes (optional)"  name="notes" :value="data?.notes" )
-  slot(name="modal-footer")
+ClientOnly
+  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
+    el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
+      slot
+      div(:class="{'2xl:w-1/2 w-[90%] card m-auto bg-white p-10 rounded-3xl': !isModal}")
+        .grid.grid-cols-2.gap-3
+          InputText(label="Full Name"  name="name" :value="data?.name" )
+          InputSelect(label=" Nationality" name="nationality" :options="ManpowerNationalityOptions" :value="data?.nationality" )
+          InputText(label="Email"  name="email" :value="data?.email" @value="val=> isEmail = !!val" )
+          InputPhone(label=" Phone Number"  name="phone" :value="data?.phone" @validphone="val=> validPhone = val" mode="international" @value="val=> isPhone = !!val" )
+          InputSelect(label=" Role" name="role" isMultiple :options="manpowerRoles" :value="data?.role" )
+          InputSelect(label=" Availability Status" name="availabilityStatus" :options="manpowerAvailabilityStatus" :value="data?.availabilityStatus" )
+        InputText(label="Salary" placeholder="Enter Salary SAR" name="salary" :value="data?.salary" )
+        .grid.grid-cols-2.gap-3
+          InputText.mt-4(label="V. Allowance"  placeholder="Enter V. Allowance SAR" name="variableAllowance" :value="data?.variableAllowance" )
+          InputText.mt-4(label="T. Allowance"  placeholder="Enter T. Allowance SAR" name="transportationAllowance" :value="data?.transportationAllowance" )
+          InputText.mt-4(label="Iqama Cost"  placeholder="Enter Iqama Cost SAR" name="iqamaCost" :value="data?.iqamaCost" )
+          InputText.mt-4(label="EOF"  placeholder="Enter EOF SAR" name="endOfServiceBenefit" :value="data?.endOfServiceBenefit" )
+          InputText.mt-4(label="Saudization (optional)"  placeholder="Enter Saudization SAR" name="saudization" :value="data?.saudization" )
+          InputText.mt-4(label="Visa Fees (optional)"  placeholder="Enter Visa Fees SAR" name="visaFees" :value="data?.visaFees" )
+          InputText.mt-4(label="Incoming flight ticket (optional)"  placeholder="Enter Incoming flight ticket SAR" name="incomingFlightTicket" :value="data?.incomingFlightTicket" )
+          InputText.mt-4(label="Health insurance (optional)"  placeholder="Enter Health insurance SAR" name="healthInsurance" :value="data?.healthInsurance" )
+        InputText.mt-4(label="General Organization for Social Insurance (optional)"  placeholder="Enter General Organization for Social Insurance SAR" name="generalOrganizationForSocialInsurance" :value="data?.generalOrganizationForSocialInsurance" )
+        InputText.mt-4(type="textarea" placeholder="Enter Notes"  label="Additional Notes (optional)"  name="notes" :value="data?.notes" )
+      slot(name="modal-footer")
 </template>
 
 <script lang="ts" setup>

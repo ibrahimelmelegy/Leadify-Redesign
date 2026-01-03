@@ -1,42 +1,39 @@
 <template lang="pug">
-el-form(
-  autocomplete="off"
-  @submit.prevent="onSubmit"
-  ref="formRef"
-  label-position="top"
-)
-  .card.m-auto.bg-neutral-50.p-6.rounded-3xl.mb-4
-    .flex.justify-between.items-center.mb-4
-      h3.text-xl.font-semibold.my-4 Invoice
-      el-button(
-        v-if="!editMode"
-        size="medium"
-        plain
-        type="primary"
-        :icon="Delete"
-        native-type="button"
-        class="!rounded-2xl !py-5 !px-3"
-        @click="onDelete"
-      )
-    .grid.grid-cols-2.gap-3
-      InputText(label="Invoice Number" name="invoiceNumber" :value="invoice?.invoiceNumber")
-      InputText(label="Invoice Amount" type="number" name="amount" :value="invoice?.amount")
-      InputDate.mt-4(label="Invoice Due Date (Optional)" placeholder="Enter Invoice Due Date" :value="invoice?.invoiceDate" name="invoiceDate")
-      InputSelect.mt-4(
-        label="Invoice Collected (Optional)"
-        placeholder="Choose Invoice Collected"
-        name="collected"
-        :options="[{ label: 'Yes', value: true }, { label: 'No', value: false }]"
-        :value="invoice?.collected"
-        @change="handleCollectedChange"
-      )
-      InputDate(
-        label="Invoice Collected Date (Optional)"
-        v-if="isCollected"
-        placeholder="Enter Invoice Collected Date"
-        :value="invoice?.collectedDate"
-        name="collectedDate"
-      )
+ClientOnly
+  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema")
+    el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="formRef" label-position="top")
+      .card.m-auto.bg-neutral-50.p-6.rounded-3xl.mb-4
+        .flex.justify-between.items-center.mb-4
+          h3.text-xl.font-semibold.my-4 Invoice
+          el-button(
+            v-if="!editMode"
+            size="medium"
+            plain
+            type="primary"
+            :icon="Delete"
+            native-type="button"
+            class="!rounded-2xl !py-5 !px-3"
+            @click="onDelete"
+          )
+        .grid.grid-cols-2.gap-3
+          InputText(label="Invoice Number" name="invoiceNumber" :value="invoice?.invoiceNumber")
+          InputText(label="Invoice Amount" type="number" name="amount" :value="invoice?.amount")
+          InputDate.mt-4(label="Invoice Due Date (Optional)" placeholder="Enter Invoice Due Date" :value="invoice?.invoiceDate" name="invoiceDate")
+          InputSelect.mt-4(
+            label="Invoice Collected (Optional)"
+            placeholder="Choose Invoice Collected"
+            name="collected"
+            :options="[{ label: 'Yes', value: true }, { label: 'No', value: false }]"
+            :value="invoice?.collected"
+            @change="handleCollectedChange"
+          )
+          InputDate(
+            label="Invoice Collected Date (Optional)"
+            v-if="isCollected"
+            placeholder="Enter Invoice Collected Date"
+            :value="invoice?.collectedDate"
+            name="collectedDate"
+          )
 </template>
 
 <script lang="ts" setup>

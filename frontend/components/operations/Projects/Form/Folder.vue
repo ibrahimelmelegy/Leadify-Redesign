@@ -1,39 +1,25 @@
 <template lang="pug">
-  el-form.border.p-10.rounded-3xl.mt-4(
-    autocomplete="off",
-    @submit.prevent="onSubmit",
-    ref="formRef",
-    label-position="top"
-  )
-    //- .flex.justify-end
-    //-   el-button(
-    //-     v-if="!editMode"
-    //-     size="medium"
-    //-     plain
-    //-     type="primary"
-    //-     :icon="Delete"
-    //-     native-type="button"
-    //-     class="!rounded-2xl !py-5 !px-3"
-    //-     @click="onDelete"
-    //-   )
-    .grid.grid-cols-1.gap-3
-      InputText(
-        label="Folder Name (optional)",
-        placeholder="Enter Folder Name",
-        name="name",
-        :value="folder?.name"
-      )
-      InputUploadFiles(
-        label="Project Files (optional)",
-        name="file",
-        :limit="4",
-        :formats="fileAttachmentsFormats",
-        formatsError="Accept only PDF, Word, Jpg, Jpeg, Png, excel, pptx, txt",
-        :tipNote="false",
-        class="md:col-span-2",
-        innerClass="!mb-0"
-        :value="folder?.refs?.map((file: any) => ({name: file, response: file }))"
-      )
+ClientOnly
+  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema")
+    el-form.border.p-10.rounded-3xl.mt-4(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="formRef" label-position="top")
+      .grid.grid-cols-1.gap-3
+        InputText(
+          label="Folder Name (optional)",
+          placeholder="Enter Folder Name",
+          name="name",
+          :value="folder?.name"
+        )
+        InputUploadFiles(
+          label="Project Files (optional)",
+          name="file",
+          :limit="4",
+          :formats="fileAttachmentsFormats",
+          formatsError="Accept only PDF, Word, Jpg, Jpeg, Png, excel, pptx, txt",
+          :tipNote="false",
+          class="md:col-span-2",
+          innerClass="!mb-0"
+          :value="folder?.refs?.map((file: any) => ({name: file, response: file }))"
+        )
   </template>
   
   <script lang="ts" setup>

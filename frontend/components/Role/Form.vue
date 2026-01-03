@@ -1,9 +1,11 @@
 <template lang="pug">
-el-form(  autocomplete="off"   @submit.prevent='onSubmit'   ref="myForm" label-position="top"  :validationSchema="formSchema" )
-  slot
-  div(class="p-10  card m-auto bg-white rounded-3xl")
-    InputText(label=" Role Name" name="name" placeholder="Enter Role Name" :value="data?.name" )
-    InputText.mt-6(type="textarea" label="Description (optional)" placeholder="Enter Description"  name="description" :value="data?.description" )
+ClientOnly
+  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
+    el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
+      slot
+      div(class="p-10 card m-auto bg-white rounded-3xl")
+        InputText(label=" Role Name" name="name" placeholder="Enter Role Name" :value="data?.name" )
+        InputText.mt-6(type="textarea" label="Description (optional)" placeholder="Enter Description"  name="description" :value="data?.description" )
 </template>
 
 <script lang="ts" setup>

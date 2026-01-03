@@ -5,11 +5,13 @@
         .mb-8.m-auto(class="md:mb-14")
             h1.text-neutral-900.text-2xl.font-semibold(class="md:text-3xl") Reset Password
             p.mt-2.font-medium.text-lg.text-neutral-500 Please kindly set your new password.
-      el-form( autocomplete="off"   @submit.prevent='onSubmit' ref="myForm" label-position="top" :validationSchema="formSchema")
-          InputText.mb-2(placeholder="New password" name="password" type="password" )
-          InputText(placeholder="Re-enter password" name="confirmPassword" type="password" )
-          el-form-item.mt-6
-            el-button(   size='large' :loading="loading" native-type="submit" type="primary"  class="w-full !my-4 !rounded-xl") Submit
+      ClientOnly
+        VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
+          el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
+            InputText.mb-2(placeholder="New password" name="password" type="password" )
+            InputText(placeholder="Re-enter password" name="confirmPassword" type="password" )
+            el-form-item.mt-6
+              el-button(size='large' :loading="loading" native-type="submit" type="primary" class="w-full !my-4 !rounded-xl") Submit
   .form.flex-1(class="xl:ms-28 lg:p-12 p-4" v-else)
       .form-sec.text-center
         .mb-8.m-auto(class="md:mb-14")

@@ -1,26 +1,28 @@
 <template lang="pug">
-el-form(  autocomplete="off"   @submit.prevent='onSubmit'   ref="myForm" label-position="top"  :validationSchema="formSchema" )
-  .card.m-auto.bg-white.p-10.rounded-3xl(class="2xl:w-1/2 w-[90%] ")
-      el-switch.my-4(v-if="!editMode" v-model="switchType", size="large" inline-prompt, style="--el-switch-on-color: #7849FF; --el-switch-off-color: #918E98", active-text="Select Client", inactive-text="Select Lead")
-      .flex.justify-between.items-center.mb-6(v-if="switchType")
-        h3.text-xl.font-semibold Client Information
-        el-switch.ml-2(v-if="!editMode" v-model="switchValue", size="large" inline-prompt, style="--el-switch-on-color: #7849FF; --el-switch-off-color: #918E98", active-text="Existing Client", inactive-text="New Client")
-      .grid.grid-cols-2.gap-3(v-if="switchType" :key="selectedClient")
-        component(:is="isClients" label=" Client Name"  name="leadName" :options="mappedClients" :value="selectedClient?.clientName" @change="getSelectedClient" :disabled="editMode")
-        InputText(label="Company Name"  name="leadCompanyName" :value="selectedClient?.companyName" :disabled="editMode" is-form)
-        InputText(label="Email"  name="email" :value="selectedClient?.email" @value="val=> isEmail = !!val" :disabled="editMode" is-form)
-        InputPhone(label=" Phone Number"  name="phone" :value="selectedClient?.phoneNumber" @validphone="val=> validPhone = val" @value="val=> isPhone = !!val" mode="international" :disabled="editMode")
-      h3.text-xl.font-semibold.my-6 Deal Information
-      .grid.grid-cols-2.gap-3
-        InputSelect(v-if="!switchType" label=" Lead" name="leadId" :options="mappedLeads" :value="selectedLead?.id" :disabled="editMode")
-        InputText(label="Deal Name"  name="dealName" :value="deal?.name"  is-form)
-        InputText(label="Company Name"  name="companyName" :value="deal?.companyName" is-form)
-        InputText(label="Deal Price"  type="number" name="dealPrice" :value="deal?.price" is-form)
-        InputSelect(label=" Contract Type" name="contractType" :options="contractTypeOptions" :value="deal?.contractType" )
-        InputSelect(label=" Assign User" name="assignUser" isMultiple :options="users" :value="users?.filter((user: any) => deal?.users?.map((user: any) => user.id)?.includes(user.value))?.map((user: any) => user.value)"  )
-        InputDate(label="Signature Date" placeholder="Enter Signature Date" :value="deal?.signatureDate" name="signatureDate" )
-        InputSelect(:class="{'col-span-2': switchType}" label=" Deal Stage" name="dealStage" :options="dealStageOptions" :value="deal?.stage" @change="checkIfCancelled" )
-      InputText(type="textarea" placeholder="Cancellation Reason"  name="cancellationReason" :value="deal?.cancelledReason" v-if="isCancelled")
+ClientOnly
+  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
+    el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
+      .card.m-auto.bg-white.p-10.rounded-3xl(class="2xl:w-1/2 w-[90%] ")
+        el-switch.my-4(v-if="!editMode" v-model="switchType", size="large" inline-prompt, style="--el-switch-on-color: #7849FF; --el-switch-off-color: #918E98", active-text="Select Client", inactive-text="Select Lead")
+        .flex.justify-between.items-center.mb-6(v-if="switchType")
+          h3.text-xl.font-semibold Client Information
+          el-switch.ml-2(v-if="!editMode" v-model="switchValue", size="large" inline-prompt, style="--el-switch-on-color: #7849FF; --el-switch-off-color: #918E98", active-text="Existing Client", inactive-text="New Client")
+        .grid.grid-cols-2.gap-3(v-if="switchType" :key="selectedClient")
+          component(:is="isClients" label=" Client Name"  name="leadName" :options="mappedClients" :value="selectedClient?.clientName" @change="getSelectedClient" :disabled="editMode")
+          InputText(label="Company Name"  name="leadCompanyName" :value="selectedClient?.companyName" :disabled="editMode" is-form)
+          InputText(label="Email"  name="email" :value="selectedClient?.email" @value="val=> isEmail = !!val" :disabled="editMode" is-form)
+          InputPhone(label=" Phone Number"  name="phone" :value="selectedClient?.phoneNumber" @validphone="val=> validPhone = val" @value="val=> isPhone = !!val" mode="international" :disabled="editMode")
+        h3.text-xl.font-semibold.my-6 Deal Information
+        .grid.grid-cols-2.gap-3
+          InputSelect(v-if="!switchType" label=" Lead" name="leadId" :options="mappedLeads" :value="selectedLead?.id" :disabled="editMode")
+          InputText(label="Deal Name"  name="dealName" :value="deal?.name"  is-form)
+          InputText(label="Company Name"  name="companyName" :value="deal?.companyName" is-form)
+          InputText(label="Deal Price"  type="number" name="dealPrice" :value="deal?.price" is-form)
+          InputSelect(label=" Contract Type" name="contractType" :options="contractTypeOptions" :value="deal?.contractType" )
+          InputSelect(label=" Assign User" name="assignUser" isMultiple :options="users" :value="users?.filter((user: any) => deal?.users?.map((user: any) => user.id)?.includes(user.value))?.map((user: any) => user.value)"  )
+          InputDate(label="Signature Date" placeholder="Enter Signature Date" :value="deal?.signatureDate" name="signatureDate" )
+          InputSelect(:class="{'col-span-2': switchType}" label=" Deal Stage" name="dealStage" :options="dealStageOptions" :value="deal?.stage" @change="checkIfCancelled" )
+        InputText(type="textarea" placeholder="Cancellation Reason"  name="cancellationReason" :value="deal?.cancelledReason" v-if="isCancelled")
 </template>
 
 <script lang="ts" setup>

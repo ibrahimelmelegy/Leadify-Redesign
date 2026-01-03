@@ -5,10 +5,12 @@
         .mb-8.m-auto(class="md:mb-14")
             h1.text-neutral-900.text-2xl.font-semibold(class="md:text-3xl") Reset Password
             p.mt-2.font-medium.text-lg.text-neutral-500 Please kindly write your email to recieve a reset <br> password link
-      el-form( autocomplete="off"   @submit.prevent='onSubmit' ref="myForm" label-position="top" :validationSchema="formSchema")
-          InputText(placeholder="email"  name="email" )
-          el-form-item.mt-6
-            el-button(   size='large' :loading="loading" native-type="submit" type="primary"  class="w-full !my-4 !rounded-xl") Send Email
+      ClientOnly
+        VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
+          el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
+            InputText(placeholder="email" name="email" )
+            el-form-item.mt-6
+              el-button(size='large' :loading="loading" native-type="submit" type="primary" class="w-full !my-4 !rounded-xl") Send Email
   .bg-black.rounded-3xl.py-8(class="order-first md:order-last md:flex-1 md:h-full" )
     img.ms-auto.px-6.mb-6(src="/images/light-logo.png" alt="login")
     div(class="shape")

@@ -1,15 +1,17 @@
 <template lang="pug">
-el-form(  autocomplete="off"   @submit.prevent='onSubmit'   ref="myForm" label-position="top"  :validationSchema="formSchema" )
-  slot
-  div(:class="{'2xl:w-1/2 w-[90%]  card m-auto bg-white p-10 rounded-3xl': !isModal}")
-    .grid.grid-cols-2.gap-3
-      InputText.mt-4(label="Plate"  placeholder="Enter Plate" name="plate" :value="data?.plate" )
-      InputSelect.mt-4(label=" Manufacturer" name="manufacturer" :options="manufacturers" :value="data?.manufacturer" )
-      InputText.mt-4(label="Rent Cost"  placeholder="Enter Rent Cost SAR" name="rentCost" :value="data?.rentCost" )
-      InputText.mt-4(label="Gas Cost"  placeholder="Enter Gas Cost SAR" name="gasCost" :value="data?.gasCost" )
-      InputText.mt-4(label="Oil Cost"  placeholder="Enter Oil Cost SAR" name="oilCost" :value="data?.oilCost" )
-      InputText.mt-4(label="Regular Maintenance Cost"  placeholder="Enter Regular Maintenance Cost SAR" name="regularMaintenanceCost" :value="data?.regularMaintenanceCost" )
-  slot(name="modal-footer")
+ClientOnly
+  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
+    el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
+      slot
+      div(:class="{'2xl:w-1/2 w-[90%] card m-auto bg-white p-10 rounded-3xl': !isModal}")
+        .grid.grid-cols-2.gap-3
+          InputText.mt-4(label="Plate"  placeholder="Enter Plate" name="plate" :value="data?.plate" )
+          InputSelect.mt-4(label=" Manufacturer" name="manufacturer" :options="manufacturers" :value="data?.manufacturer" )
+          InputText.mt-4(label="Rent Cost"  placeholder="Enter Rent Cost SAR" name="rentCost" :value="data?.rentCost" )
+          InputText.mt-4(label="Gas Cost"  placeholder="Enter Gas Cost SAR" name="gasCost" :value="data?.gasCost" )
+          InputText.mt-4(label="Oil Cost"  placeholder="Enter Oil Cost SAR" name="oilCost" :value="data?.oilCost" )
+          InputText.mt-4(label="Regular Maintenance Cost"  placeholder="Enter Regular Maintenance Cost SAR" name="regularMaintenanceCost" :value="data?.regularMaintenanceCost" )
+      slot(name="modal-footer")
 </template>
 
 <script lang="ts" setup>
