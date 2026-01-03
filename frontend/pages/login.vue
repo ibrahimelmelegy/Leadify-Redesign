@@ -45,7 +45,10 @@
   const formSchema = yup.object({
     email: yup
       .string()
-      .email()
+      .test('is-valid-email', 'email must be a valid email', (value) => {
+        if (!value) return false;
+        return isEmailValidator(value);
+      })
       .max(50)
       .required()
       .label("email"),
