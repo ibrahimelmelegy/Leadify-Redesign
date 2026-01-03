@@ -76,21 +76,25 @@
       password: values.password,
     });
     if (response?.token) {
+      // Store token in both cookie and localStorage for compatibility
       const accessToken = useCookie("access_token", {
         maxAge: 60 * 60 * 24 * 7, // 7 days
         path: "/",
-        sameSite: "lax",
       });
       accessToken.value = response?.token;
+      // Also store in localStorage as fallback for iframe environments
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('access_token', response.token);
+      }
       ElNotification({
         title: "Success",
         type: "success",
         message: response.message,
       });
-      // Wait for cookie to be set then reload
+      // Wait for storage to be set then reload
       setTimeout(() => {
         window.location.href = "/";
-      }, 500);
+      }, 300);
     } else {
       ElNotification({
         title: "Error",

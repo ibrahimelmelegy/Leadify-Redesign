@@ -33,14 +33,18 @@ export const useApiFetch = async (
   error?: any;
 }> => {
   const config = useRuntimeConfig();
-  const accessToken = useCookie('access_token');
+  const accessTokenCookie = useCookie('access_token');
+  let token = accessTokenCookie.value;
+  if (!token && typeof window !== 'undefined') {
+    token = localStorage.getItem('access_token');
+  }
   const defaultOptions = {
     method,
     body: method === 'GET' ? null : data,
     headers: {
       ...(!isFd && { 'Content-Type': 'application/json' }),
       ...(!isFd && { Accept: 'application/json' }),
-      ...(accessToken.value ? { Authorization: `Bearer ${accessToken.value}` } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   };
   try {
