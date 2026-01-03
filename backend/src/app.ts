@@ -33,6 +33,11 @@ import settingRoutes from './setting/settingRoutes';
 import insightRoutes from './insights/insightRoutes';
 import dailyTaskRoutes from './dailyTask/dailyTaskRoutes';
 import { rateLimiter, loginRateLimiter } from './utils/rateLimiter';
+import twoFactorRoutes from './auth/twoFactorRoutes';
+import auditRoutes from './audit/auditRoutes';
+import AuditLog from './audit/auditModel';
+import webhookRoutes from './webhooks/webhookRoutes';
+import Webhook from './webhooks/webhookModel';
 
 const fileUpload = require('express-fileupload');
 
@@ -104,6 +109,9 @@ app.use('/api/daily-task', dailyTaskRoutes);
 
 // Authentication routes
 app.use('/api', authRoutes); // Use /api for authentication-related routes
+app.use('/api/2fa', twoFactorRoutes);
+app.use('/api/audit', auditRoutes);
+app.use('/api/webhooks', webhookRoutes);
 
 // Serve static files from the 'public' directory
 app.use('/assets', express.static('public/uploads'));

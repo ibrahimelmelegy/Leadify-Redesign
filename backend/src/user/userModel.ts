@@ -55,6 +55,26 @@ class User extends Model {
   @BelongsTo(() => Role)
   public role!: Role;
 
+  @Default(false)
+  @Column({ type: DataType.BOOLEAN, allowNull: false })
+  public twoFactorEnabled!: boolean;
+
+  @Column({ type: DataType.STRING, allowNull: true })
+  public twoFactorSecret?: string;
+
+  @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: true })
+  public backupCodes?: string[];
+
+  @Default(0)
+  @Column({ type: DataType.INTEGER, allowNull: false })
+  public failedLoginAttempts!: number;
+
+  @Column({ type: DataType.DATE, allowNull: true })
+  public lockedUntil?: Date;
+
+  @Column({ type: DataType.DATE, allowNull: true })
+  public lastPasswordChange?: Date;
+
   // @BelongsToMany(() => Project, 'userProjects', 'projectId', 'userId')
   // public projects!: Project[];
 

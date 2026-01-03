@@ -44,6 +44,8 @@ import ClientUsers from '../client/client_UsersModel';
 import UserProjects from '../project/models/projectUsersModel';
 import { Material } from '../material/material.model';
 import DailyTask from '../dailyTask/dailyTaskModel';
+import AuditLog from '../audit/auditModel';
+import Webhook from '../webhooks/webhookModel';
 
 dotenv.config();
 
@@ -108,7 +110,9 @@ const sequelize = new Sequelize({
     OpportunityUsers,
     ClientUsers,
     UserProjects,
-    DailyTask
+    DailyTask,
+    AuditLog,
+    Webhook
   ], // Path to your models
   logging: true // Disable logging (optional, based on your preference)
 });
