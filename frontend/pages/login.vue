@@ -6,8 +6,8 @@
             h1.font-medium.text-lg.text-neutral-600 Welcome back 👋
             p.mt-2.text-neutral-900.text-2xl.font-semibold(class="md:text-3xl") Login to your account
       el-form( autocomplete="off"   @submit.prevent='onSubmit' ref="myForm" label-position="top" :validationSchema="formSchema")
-          InputText(placeholder="email"  name="email" )
-          InputText(placeholder="password"  name="password" :type="'password'" )
+          InputText(placeholder="Email" label="Email" name="email" )
+          InputText(placeholder="Password" label="Password" name="password" :type="'password'" )
           p.text-xs.opacity-50
           .flex.justify-between.items-center.mt-4
             el-checkbox(label="Remember me" class="!text-neutral-900 font-normal")
