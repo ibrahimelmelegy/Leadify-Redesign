@@ -19,6 +19,7 @@
               //-   Icon.text-neutral-800(name="IconNotifications"  size="20")
               //-   span.absolute.rounded-full.w-2.h-2.bg-red-500(class="top-[10px] right-[15px] ")
               .tools.flex.items-center(class="p-2 bg-white rounded-full gap-2.5" )
+                DarkModeToggle
                 el-dropdown(class="outline-0")
                       div.flex.gap-3.items-center.outline-0.border-0
                             Avatar(:src="user?.profilePicture", small)
