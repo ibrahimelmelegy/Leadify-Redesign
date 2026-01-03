@@ -2,3 +2,76 @@ modules = ["python-3.11", "nodejs-20"]
 
 [nix]
 channel = "stable-25_05"
+
+[agent]
+expertMode = true
+
+[userenv]
+
+[userenv.shared]
+DB_HOST = "helium"
+DB_PORT = "5432"
+DB_USER = "postgres"
+DB_PASSWORD = "password"
+DB_NAME = "heliumdb"
+DB_SYNC = "true"
+DB_SYNC_ALTER = "true"
+SECRET_KEY = "replit_jwt_secret_key_2024"
+JWT_EXPIRATION_TIME = "24h"
+PORT = "3000"
+APP_BASE_URL = "https://0536cad0-fdfe-4c51-b686-f43ce97708ac-00-1ay2mixuc6pa5.worf.replit.dev"
+CORS_ORIGIN = "*"
+BASE_URL = "/"
+API_BASE_URL = "/api/"
+UPLOAD_MAX_SIZE_MB = "25"
+UPLOAD_ALLOWED_MIME = "image/png,image/jpeg,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+ALLOW_SUPER_ADMIN_CREATION = "true"
+SESSION_EXPIRATION_TIME = "7"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Backend API"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Frontend"
+
+[[workflows.workflow]]
+name = "Backend API"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend && npx ts-node src/server.ts"
+waitForPort = 3000
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "Frontend"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd frontend && npx nuxt dev --host 0.0.0.0 --port 5000"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 3000
+externalPort = 3000
+
+[[ports]]
+localPort = 5000
+externalPort = 5000

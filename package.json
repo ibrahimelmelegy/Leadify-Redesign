@@ -1,12 +1,13 @@
 {
-  "name": "workspace",
+  "name": "leadify",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+    "backend:install": "cd backend && npm install --legacy-peer-deps",
+    "frontend:install": "cd frontend && npm install --legacy-peer-deps",
+    "install:all": "npm run backend:install && npm run frontend:install",
+    "backend:dev": "cd backend && npx ts-node src/server.ts",
+    "frontend:dev": "cd frontend && npx nuxt dev --host 0.0.0.0 --port 5000",
+    "dev": "npm run backend:dev & npm run frontend:dev"
+  }
 }

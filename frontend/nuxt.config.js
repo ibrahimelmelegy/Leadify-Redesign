@@ -17,15 +17,6 @@ export default defineNuxtConfig({
   },
 
   css: ['@/assets/styles/global.scss'],
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `@use "@/assets/styles/variables.scss" as *;`,
-        },
-      },
-    },
-  },
 
   modules: ['@element-plus/nuxt', 'nuxt-icon', '@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxt/image', 'nuxt-tiptap-editor'],
   tiptap: {
@@ -48,6 +39,23 @@ export default defineNuxtConfig({
   },
   ssr: false,
   devtools: { enabled: true, vscode: { enabled: true } },
+  devServer: {
+    host: '0.0.0.0',
+    port: 5000,
+  },
+  vite: {
+    server: {
+      allowedHosts: true,
+      hmr: false,
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@/assets/styles/variables.scss" as *;`,
+        },
+      },
+    },
+  },
 
   // pwa: {
   //   workbox: {
@@ -61,4 +69,12 @@ export default defineNuxtConfig({
   // },
 
   compatibilityDate: '2024-11-16',
+  nitro: {
+    devProxy: {
+      '/api': {
+        target: 'http://localhost:3000/api',
+        changeOrigin: true,
+      },
+    },
+  },
 });

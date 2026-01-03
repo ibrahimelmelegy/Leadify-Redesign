@@ -23,10 +23,10 @@ class UploaderService {
     const mimeType = String(input.mimetype || '');
     const size = Number(input.size || 0);
     if (size && size > maxBytes) {
-      throw new BaseError({ ...ERRORS.FILE_ERROR, message: `File too large. Max ${maxSizeMb}MB.` } as any);
+      throw new BaseError(ERRORS.FILE_ERROR, `File too large. Max ${maxSizeMb}MB.`);
     }
     if (allowed.length && mimeType && !allowed.includes(mimeType)) {
-      throw new BaseError({ ...ERRORS.FILE_ERROR, message: `Unsupported file type: ${mimeType}` } as any);
+      throw new BaseError(ERRORS.FILE_ERROR, `Unsupported file type: ${mimeType}`);
     }
 
     // Generate file path
