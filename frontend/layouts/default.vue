@@ -34,7 +34,7 @@
               .notification(class="p-2 bg-white rounded-full")
                NuxtLink.flex.items-center(:to="`/notification`" )
                 Icon.text-md(name="IconNotifications" )
-                div.border.rounded-xl(v-if="response?.unreadNotificationsCount > 0" class="h-[10px] w-[10px] bg-[red]" style="margin-left:-5px ; margin-top:-30px")
+                div.border.rounded-xl(v-if="response?.value?.unreadNotificationsCount > 0" class="h-[10px] w-[10px] bg-[red]" style="margin-left:-5px ; margin-top:-30px")
           .mt-4
         .slot-content(class="!mt-24" :class="{'!pl-[32px] !pr-[50px]' : !mobile, '!px-[20px] '  : mobile}")
             slot
@@ -54,7 +54,15 @@ const showNavbar = ref(false);
 const showDropdown = ref(false);
 const searchInput = ref("");
 
-const response = await useTableFilter("notification");
+const response = ref<any>({});
+
+onMounted(async () => {
+  try {
+    response.value = await useTableFilter("notification");
+  } catch (e) {
+    console.error('Failed to load notifications:', e);
+  }
+});
 
 function toggleDropdown(val: boolean) {
   showDropdown.value = val;

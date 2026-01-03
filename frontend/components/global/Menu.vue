@@ -46,10 +46,16 @@ const { fullNav, mobile, hideNav } = storeToRefs(mainStore);
 const { permissions } = storeToRefs(mainStore);
 const route = useRoute();
 const router = useRouter();
-const user = ref();
+const user = ref<any>({});
 
-const response = await useApiFetch("auth/me");
-user.value = response?.user;
+onMounted(async () => {
+  try {
+    const response = await useApiFetch("auth/me");
+    user.value = response?.user || {};
+  } catch (e) {
+    console.error('Failed to load user:', e);
+  }
+});
 
 function mobileNavigate(link: string) {
   if (mobile.value) {
