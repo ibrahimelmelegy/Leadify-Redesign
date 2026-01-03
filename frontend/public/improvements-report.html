@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تقرير تحسينات نظام Leadify CRM</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    .report { 
+      background: white; 
+      border-radius: 20px; 
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+      overflow: hidden;
+    }
+    .header { 
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: white; 
+      padding: 40px; 
+      text-align: center;
+    }
+    .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+    .header .date { opacity: 0.8; font-size: 1.1em; }
+    .header .badge { 
+      display: inline-block; 
+      background: #00dc82; 
+      color: #1a1a2e;
+      padding: 8px 20px; 
+      border-radius: 20px; 
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .content { padding: 40px; }
+    .summary-box {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+      border-right: 5px solid #667eea;
+    }
+    .summary-box h2 { color: #667eea; margin-bottom: 15px; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .stat-card .number { font-size: 2.5em; font-weight: bold; color: #667eea; }
+    .stat-card .label { color: #666; margin-top: 5px; }
+    .section { margin-bottom: 35px; }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #eee;
+    }
+    .section-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5em;
+      color: white;
+    }
+    .section-icon.security { background: linear-gradient(135deg, #ef4444, #dc2626); }
+    .section-icon.features { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+    .section-icon.ux { background: linear-gradient(135deg, #10b981, #059669); }
+    .section-icon.api { background: linear-gradient(135deg, #f59e0b, #d97706); }
+    .section-icon.pages { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+    .section h3 { font-size: 1.4em; color: #333; }
+    .feature-list { list-style: none; }
+    .feature-list li {
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border-right: 4px solid #667eea;
+      transition: all 0.3s ease;
+    }
+    .feature-list li:hover {
+      transform: translateX(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .feature-title { font-weight: bold; color: #333; margin-bottom: 5px; }
+    .feature-desc { color: #666; font-size: 0.95em; line-height: 1.6; }
+    .file-path { 
+      font-family: monospace; 
+      background: #e9ecef; 
+      padding: 2px 8px; 
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: #495057;
+      direction: ltr;
+      display: inline-block;
+    }
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .tech-tag {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9em;
+    }
+    .footer {
+      background: #1a1a2e;
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    .footer a { color: #00dc82; text-decoration: none; }
+    @media print {
+      body { background: white; padding: 0; }
+      .report { box-shadow: none; }
+      .feature-list li:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="report">
+      <div class="header">
+        <h1>تقرير تحسينات نظام Leadify CRM</h1>
+        <div class="date">3 يناير 2026</div>
+        <div class="badge">اكتمال التحسينات 100%</div>
+      </div>
+
+      <div class="content">
+        <div class="summary-box">
+          <h2>ملخص التحسينات</h2>
+          <p>تم تنفيذ مجموعة شاملة من التحسينات على نظام Leadify CRM تشمل الأمان المتقدم، ذكاء الأعمال، تجربة المستخدم، والبنية التحتية للـ API.</p>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="number">5</div>
+              <div class="label">ميزات أمان</div>
+            </div>
+            <div class="stat-card">
+              <div class="number">4</div>
+              <div class="label">ميزات ذكاء أعمال</div>
+            </div>
+            <div class="stat-card">
+              <div class="number">3</div>
+              <div class="label">تحسينات UX</div>
+            </div>
+            <div class="stat-card">
+              <div class="number">2</div>
+              <div class="label">بنية API</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">
+            <div class="section-icon security">&#128274;</div>
+            <h3>ميزات الأمان</h3>
+          </div>
+          <ul class="feature-list">
+            <li>
+              <div class="feature-title">المصادقة الثنائية (2FA)</div>
+              <div class="feature-desc">
+                نظام مصادقة ثنائية متكامل مع إنشاء رمز QR للربط مع تطبيقات المصادقة (Google Authenticator, Authy). يتضمن 6 أكواد احتياطية للاستخدام في حالة فقدان الجهاز.
+              </div>
+              <div class="file-path">backend/src/utils/twoFactorAuth.ts</div>
+              <div class="file-path">frontend/components/security/TwoFactorSetup.vue</div>
+            </li>
+            <li>
+              <div class="feature-title">سجل التدقيق الشامل</div>
+              <div class="feature-desc">
+                تتبع جميع إجراءات المستخدم في النظام بما في ذلك: تسجيل الدخول/الخروج، إنشاء/تعديل/حذف السجلات، مع حفظ عنوان IP ومعلومات المتصفح.
+              </div>
+              <div class="file-path">backend/src/audit/auditModel.ts</div>
+              <div class="file-path">backend/src/audit/auditService.ts</div>
+            </li>
+            <li>
+              <div class="feature-title">حماية قفل الحساب</div>
+              <div class="feature-desc">
+                قفل الحساب تلقائياً بعد 5 محاولات فاشلة لتسجيل الدخول لمدة 15 دقيقة. يحمي من هجمات التخمين ويسجل جميع المحاولات الفاشلة.
+              </div>
+              <div class="file-path">backend/src/user/models/loginFailureModel.ts</div>
+            </li>
+            <li>
+              <div class="feature-title">سياسة كلمات المرور</div>
+              <div class="feature-desc">
+                متطلبات قوة كلمة المرور: 8 أحرف على الأقل، حرف كبير، حرف صغير، رقم، رمز خاص. مع كشف كلمات المرور الشائعة ومؤشر قوة بصري.
+              </div>
+              <div class="file-path">frontend/composables/usePasswordPolicy.ts</div>
+              <div class="file-path">frontend/components/security/PasswordStrength.vue</div>
+            </li>
+            <li>
+              <div class="feature-title">إدارة الجلسات</div>
+              <div class="feature-desc">
+                عرض جميع الجلسات النشطة للمستخدم مع معلومات الجهاز والموقع. إمكانية إنهاء جلسات محددة أو جميع الجلسات الأخرى.
+              </div>
+              <div class="file-path">frontend/components/security/SessionManagement.vue</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <div class="section-title">
+            <div class="section-icon features">&#128202;</div>
+            <h3>ميزات ذكاء الأعمال</h3>
+          </div>
+          <ul class="feature-list">
+            <li>
+              <div class="feature-title">نظام تسجيل العملاء المحتملين (Lead Scoring)</div>
+              <div class="feature-desc">
+                حساب تلقائي لنقاط كل عميل محتمل بناءً على: معلومات الاتصال (بريد، هاتف، شركة)، حالة العميل، ونشاط التواصل. تصنيف من Hot إلى Cold.
+              </div>
+              <div class="file-path">frontend/components/leads/LeadScoring.vue</div>
+            </li>
+            <li>
+              <div class="feature-title">الجدول الزمني للعميل 360</div>
+              <div class="feature-desc">
+                عرض شامل لتاريخ تفاعل العميل: الفرص، الصفقات، المشاريع، الاتصالات. مع فلترة حسب النوع والتاريخ.
+              </div>
+              <div class="file-path">frontend/components/client/CustomerTimeline.vue</div>
+            </li>
+            <li>
+              <div class="feature-title">لوحة تحكم تفاعلية</div>
+              <div class="feature-desc">
+                بطاقات إحصائية مع مؤشرات الاتجاه (صعود/هبوط)، رسوم بيانية للنشاط باستخدام Canvas API، مع ألوان ديناميكية.
+              </div>
+              <div class="file-path">frontend/components/dashboard/StatsCard.vue</div>
+              <div class="file-path">frontend/components/dashboard/ActivityChart.vue</div>
+            </li>
+            <li>
+              <div class="feature-title">مركز الإشعارات المتقدم</div>
+              <div class="feature-desc">
+                نظام إشعارات في الوقت الفعلي مع شارة للرسائل غير المقروءة، تصنيف حسب النوع، وإعدادات تفضيلات الإشعارات.
+              </div>
+              <div class="file-path">frontend/components/notifications/NotificationCenter.vue</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <div class="section-title">
+            <div class="section-icon ux">&#127912;</div>
+            <h3>تحسينات تجربة المستخدم</h3>
+          </div>
+          <ul class="feature-list">
+            <li>
+              <div class="feature-title">الوضع الداكن</div>
+              <div class="feature-desc">
+                دعم كامل للوضع الداكن مع متغيرات CSS شاملة تغطي جميع مكونات Element Plus. تبديل سلس وحفظ التفضيل.
+              </div>
+              <div class="file-path">frontend/assets/css/dark-mode.css</div>
+              <div class="file-path">frontend/components/global/DarkModeToggle.vue</div>
+            </li>
+            <li>
+              <div class="feature-title">تصدير التقارير</div>
+              <div class="feature-desc">
+                تصدير البيانات بتنسيقات متعددة: PDF (مع دعم العربية)، Excel (XLSX)، CSV. واجهة سهلة مع اختيار التنسيق.
+              </div>
+              <div class="file-path">frontend/composables/useExport.ts</div>
+              <div class="file-path">frontend/components/global/ExportButton.vue</div>
+            </li>
+            <li>
+              <div class="feature-title">جولة تعريفية للمستخدمين الجدد</div>
+              <div class="feature-desc">
+                جولة خطوة بخطوة لتعريف المستخدمين الجدد بميزات النظام. مع إمكانية التخطي وحفظ حالة الإكمال.
+              </div>
+              <div class="file-path">frontend/components/global/OnboardingTour.vue</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <div class="section-title">
+            <div class="section-icon api">&#128268;</div>
+            <h3>البنية التحتية للـ API</h3>
+          </div>
+          <ul class="feature-list">
+            <li>
+              <div class="feature-title">نظام إصدارات API</div>
+              <div class="feature-desc">
+                دعم إصدارات API عبر الـ headers. إمكانية تشغيل إصدارات متعددة بالتوازي مع إشعارات الإيقاف.
+              </div>
+              <div class="file-path">backend/src/utils/apiVersioning.ts</div>
+            </li>
+            <li>
+              <div class="feature-title">نظام Webhooks</div>
+              <div class="feature-desc">
+                ربط مع أنظمة خارجية عبر webhooks. أحداث مدعومة: إنشاء/تحديث/حذف العملاء والفرص والصفقات. توقيع HMAC-SHA256 للأمان.
+              </div>
+              <div class="file-path">backend/src/webhooks/webhookModel.ts</div>
+              <div class="file-path">backend/src/webhooks/webhookService.ts</div>
+              <div class="file-path">backend/src/webhooks/webhookRoutes.ts</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <div class="section-title">
+            <div class="section-icon pages">&#128196;</div>
+            <h3>الصفحات الجديدة</h3>
+          </div>
+          <ul class="feature-list">
+            <li>
+              <div class="feature-title">صفحة إعدادات الأمان</div>
+              <div class="feature-desc">
+                صفحة شاملة لإدارة إعدادات الأمان: المصادقة الثنائية، تغيير كلمة المرور، إدارة الجلسات.
+              </div>
+              <div class="file-path">frontend/pages/settings/security.vue</div>
+              <div>المسار: <span class="file-path">/settings/security</span></div>
+            </li>
+            <li>
+              <div class="feature-title">عارض سجل التدقيق</div>
+              <div class="feature-desc">
+                صفحة لعرض وفلترة سجلات التدقيق حسب المستخدم، نوع الإجراء، التاريخ. مع إمكانية التصدير.
+              </div>
+              <div class="file-path">frontend/pages/audit-logs.vue</div>
+              <div>المسار: <span class="file-path">/audit-logs</span></div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="summary-box" style="border-right-color: #10b981;">
+          <h2 style="color: #10b981;">التقنيات المستخدمة</h2>
+          <div class="tech-stack">
+            <span class="tech-tag">Nuxt 3</span>
+            <span class="tech-tag">Vue.js 3</span>
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">Express.js</span>
+            <span class="tech-tag">Sequelize</span>
+            <span class="tech-tag">PostgreSQL</span>
+            <span class="tech-tag">Element Plus</span>
+            <span class="tech-tag">TailwindCSS</span>
+            <span class="tech-tag">Speakeasy (2FA)</span>
+            <span class="tech-tag">QRCode</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>تم إنشاء هذا التقرير بواسطة <a href="#">Leadify CRM</a></p>
+        <p style="margin-top: 10px; opacity: 0.7;">جميع الحقوق محفوظة 2026</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
