@@ -59,6 +59,15 @@ The application runs with two workflows:
 - Password: `admin123`
 
 ## Recent Changes
+- January 3, 2026: Code quality improvements
+  - Added API rate limiting (100 req/min general, 5 req/15min for login)
+  - Created database indexes for 30+ columns (performance optimization)
+  - Built centralized error handling utility (useErrorHandler)
+  - Improved TypeScript types (User, Lead, Opportunity, Deal, etc.)
+  - Created reusable ConfirmDialog component
+  - Added API response standardization utilities
+  - Fixed permission cache clearing on logout
+  
 - January 3, 2026: Initial setup on Replit
   - Extracted and configured backend/frontend from zip file
   - Set up PostgreSQL database with auto-sync
