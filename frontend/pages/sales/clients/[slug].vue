@@ -86,6 +86,8 @@ el-tabs.demo-tabs(v-model="activeName", @tab-click="handleClick")
                 Icon(name="IconCalendar" size="20" class="mr-2")
                 p Last Updated
               p.text-neutral-800.mb-2 {{formatDate(client?.updatedAt)}}
+    .mt-6(v-if="client?.id")
+      CustomerTimeline(:clientId="client.id")
     .flex-1.bg-white.p-10.rounded-3xl.mt-6(v-if="client?.fileUpload?.length")
      .flex.items-center.gap-3.mb-6
       .flex.items-center.justify-center.w-12.h-12.rounded-full(class="!min-w-[48px] !min-h-[48px]" class="bg-secondary-turquoise-50 text-secondary-turquoise-700"): Icon(name="mdi:file-outline" size="24")

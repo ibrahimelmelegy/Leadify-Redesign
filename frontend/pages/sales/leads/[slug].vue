@@ -81,6 +81,11 @@ el-tabs.demo-tabs(v-model="activeName", @tab-click="handleClick")
                 Icon(name="IconCalendar" size="20" class="mr-2")
                 p Last Contact
               p.text-neutral-800.mb-2 {{formatDate(lead?.lastContactDate)}}
+      .flex-1.bg-white.p-10.rounded-3xl
+        .flex.items-center.gap-2.mb-4
+          .flex.items-center.justify-center.w-10.h-10.rounded-full.bg-primary-purple-50: Icon.text-primary-purple-500(name="ph:chart-line-up-bold" size="24")
+          h4.text-lg.font-semibold.text-neutral-900 Lead Score
+        LeadScoring(:lead="lead" v-if="lead")
       .flex-1.bg-white.p-10.rounded-3xl(v-if="lead?.notes")
         .flex.items-center.gap-2.mb-4
           .flex.items-center.justify-center.w-10.h-10.rounded-full.bg-secondary-turquoise-50: Icon.text-secondary-turquoise-700(name="IconNote" size="24")
