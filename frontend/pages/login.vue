@@ -5,16 +5,18 @@
         .mb-8.m-auto(class="md:mb-14")
             h1.font-medium.text-lg.text-neutral-600 Welcome back 👋
             p.mt-2.text-neutral-900.text-2xl.font-semibold(class="md:text-3xl") Login to your account
-      el-form( autocomplete="off"   @submit.prevent='onSubmit' ref="myForm" label-position="top" :validationSchema="formSchema")
-          InputText(placeholder="Email" label="Email" name="email" )
-          InputText(placeholder="Password" label="Password" name="password" :type="'password'" )
-          p.text-xs.opacity-50
-          .flex.justify-between.items-center.mt-4
-            el-checkbox(label="Remember me" class="!text-neutral-900 font-normal")
-            nuxt-link.text-secondary-blue-500.text-sm.font-medium(to="/forget-password") Forgot password?
+      ClientOnly
+        VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
+          el-form( autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
+            InputText(placeholder="Email" label="Email" name="email" )
+            InputText(placeholder="Password" label="Password" name="password" :type="'password'" )
+            p.text-xs.opacity-50
+            .flex.justify-between.items-center.mt-4
+              el-checkbox(label="Remember me" class="!text-neutral-900 font-normal")
+              nuxt-link.text-secondary-blue-500.text-sm.font-medium(to="/forget-password") Forgot password?
 
-          el-form-item.mt-6
-            el-button(   size='large' :loading="loading" native-type="submit" type="primary"  class="w-full !my-4 !rounded-xl") Login
+            el-form-item.mt-6
+              el-button(   size='large' :loading="loading" native-type="submit" type="primary"  class="w-full !my-4 !rounded-xl") Login
   .bg-black.rounded-3xl.py-8(class="order-first md:order-last md:flex-1 md:h-full" )
     img.ms-auto.px-6.mb-6(src="/images/light-logo.png" alt="login")
     div(class="shape")
@@ -27,8 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { useForm } from "vee-validate";
-  import * as yup from "yup";
+    import * as yup from "yup";
   import isEmailValidator from "validator/lib/isEmail";
   import { useAuthStore } from "~/stores/auth";
   const auth = useAuthStore();
@@ -68,11 +69,7 @@
   const route = useRoute();
   const loading = ref(false);
 
-  const { handleSubmit, setFieldValue } = useForm({
-    validationSchema: formSchema,
-  });
-
-  const onSubmit = handleSubmit(async (values: any, actions: any) => {
+  const onSubmit = async (values: any) => {
     loading.value = true;
     const response = await useApiFetch("auth/login", "POST", {
       email: values.email,
@@ -106,7 +103,7 @@
       });
     }
     loading.value = false;
-  });
+  };
 </script>
 
 <style lang="scss">

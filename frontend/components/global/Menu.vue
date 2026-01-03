@@ -17,7 +17,7 @@
               Icon.myicon(size="20" :name="navLink.icon")
             .mr-2
             span {{navLink.name}}
-          el-menu-items(v-for="(subLink, subIndex) in navLink.submenu")
+          el-menu-item-group(v-for="(subLink, subIndex) in navLink.submenu")
             NuxtLink(:to="subLink.link" v-if="subLink.link == '/operations/daily-task' && user.id == 1")
               el-menu-item(:index="subLink.link" @click="mobileNavigate(subLink.link)" :class="{'is-active': route.fullPath.includes(subLink.link) && subLink.link == '/'}") {{subLink.name}}
             el-menu-item(:index="`${index+1}-${subIndex+1}`" :class="{'disabled-link' : getDisabled(subLink.role)}" v-else-if="getDisabled(subLink.role) && subLink.link !== '/operations/daily-task'") {{subLink.name}}

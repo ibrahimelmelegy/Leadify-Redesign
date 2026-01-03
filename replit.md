@@ -67,7 +67,7 @@ The application runs with two workflows:
   - Disabled HMR for stable development in Replit environment
   - Fixed authentication flow:
     - Added localStorage fallback for token storage (iframe compatibility)
-    - Fixed login page email validation and added required label props
+    - Fixed login page email validation using validator library's isEmail
     - Corrected cookie storage timing before redirect
   - Fixed permission system:
     - Added 'all' permission support for admin full access
@@ -81,3 +81,8 @@ The application runs with two workflows:
     - Converted all top-level await calls to onMounted() in form components
     - Fixed layout blocking issues in default.vue and global/Menu.vue
   - Configured separate Backend and Frontend workflows for Replit
+  - Fixed VeeValidate form integration:
+    - Created vee-validate.client.ts plugin to register VForm, VField, VErrorMessage globally
+    - Updated login.vue to wrap form with VForm component and ClientOnly for SSR compatibility
+    - Fixed plugin errors in quill.client.js and cropper.ts (removed invalid .use() calls)
+  - Fixed Menu component: changed invalid el-menu-items to el-menu-item-group
