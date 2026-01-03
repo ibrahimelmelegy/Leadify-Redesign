@@ -130,11 +130,19 @@ const onSubmit = handleSubmit((values: any, actions: any) => {
   emit('submit', values);
 });
 
-let users = await useApiFetch('users');
-users = users?.body?.docs?.map((e: any) => ({
-  label: e.name,
-  value: e.id,
-}));
+const users = ref<any[]>([]);
+
+onMounted(async () => {
+  try {
+    const response = await useApiFetch('users');
+    users.value = response?.body?.docs?.map((e: any) => ({
+      label: e.name,
+      value: e.id,
+    })) || [];
+  } catch (e) {
+    console.error('Failed to load users:', e);
+  }
+});
 
 function checkIfOtherSource(value: any) {
   if (value.value === 'OTHER') {

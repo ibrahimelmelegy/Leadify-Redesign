@@ -169,63 +169,67 @@ el-form(  autocomplete="off"   @submit.prevent='onSubmit'   ref="myForm" label-p
     isCancelled.value = true;
   }
 
-  //  Get Users
-  let users = await useApiFetch("users");
-  // Map Users to Select Options
-  users = users?.body?.docs?.map((e: any) => ({
-    label: e.name,
-    value: e.id,
-  }));
-
-  //  Get leads
-  const response = await getLeads();
-  const leads = response.leads;
-  //  Map leads to Select Options
-  let mappedLeads = leads?.map((e: any) => ({
-    label: e.name,
-    value: e.id,
-  }));
-
+  const users = ref<any[]>([]);
+  const leads = ref<any[]>([]);
+  const mappedLeads = ref<any[]>([]);
   const selectedClient = ref<any>([]);
-  const mappedClients = ref<{ label: string; value: any }[]>();
-  //  Get clients
-  let { clients } = await getClients();
-  // Map clients to Select Options
-  mappedClients.value = clients?.map((e: any) => ({
-    label: e.clientName,
-    value: e.clientName,
-    id: e.id,
-  }));
-
-  if (props.deal?.clientId) {
-    selectedClient.value = clients?.find((client: any) => client.id === props.deal?.clientId);
-    switchType.value = true;
-  }
+  const mappedClients = ref<{ label: string; value: any }[]>([]);
   const selectedLead = ref<string | null>();
-  const leadId = route.query?.leadId || props?.deal?.leadId;
-  const opportunityId = route.query?.opportunityId;
+  const clients = ref<any[]>([]);
 
-  if (leadId) {
-    let lead: any = leads?.find((l: any) => l.id === leadId);
+  onMounted(async () => {
+    try {
+      const [usersRes, leadsRes, clientsRes] = await Promise.all([
+        useApiFetch("users"),
+        getLeads(),
+        getClients()
+      ]);
+      
+      users.value = usersRes?.body?.docs?.map((e: any) => ({
+        label: e.name,
+        value: e.id,
+      })) || [];
+      
+      leads.value = leadsRes.leads || [];
+      mappedLeads.value = leads.value.map((e: any) => ({
+        label: e.name,
+        value: e.id,
+      }));
+      
+      clients.value = clientsRes.clients || [];
+      mappedClients.value = clients.value.map((e: any) => ({
+        label: e.clientName,
+        value: e.clientName,
+        id: e.id,
+      }));
 
-    if (!lead || opportunityId) {
-      // Always fetch from API if opportunityId exists or local lead was not found
-      lead = await getLead(leadId as string);
+      if (props.deal?.clientId) {
+        selectedClient.value = clients.value.find((client: any) => client.id === props.deal?.clientId);
+        switchType.value = true;
+      }
+
+      const leadId = route.query?.leadId || props?.deal?.leadId;
+      const opportunityId = route.query?.opportunityId;
+
+      if (leadId) {
+        let lead: any = leads.value.find((l: any) => l.id === leadId);
+
+        if (!lead || opportunityId) {
+          lead = await getLead(leadId as string);
+        }
+
+        if (lead) {
+          mappedLeads.value = [...mappedLeads.value, { label: lead.name, value: lead.id }];
+          selectedLead.value = lead;
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load form data:', e);
     }
+  });
 
-    if (lead) {
-      mappedLeads = [...mappedLeads, { label: lead.name, value: lead.id }];
-      selectedLead.value = lead;
-    }
-  }
-
-  /**
-   * Updates the selectedClient variable when a new lead is selected.
-   * @param {Object} e - The selected lead object
-   */
   function getSelectedClient(e: any) {
-    // Find the selected lead in the clients array and update the selectedClient variable
-    selectedClient.value = clients?.find((lead: any) => lead.id === e.id);
+    selectedClient.value = clients.value?.find((lead: any) => lead.id === e.id);
 
     if (selectedClient.value?.email) {
       isEmail.value = true;

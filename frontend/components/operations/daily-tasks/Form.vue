@@ -98,24 +98,32 @@ function onFetchClient(id:string) {
   console.log(id)
   emit('fetchClient', id);
 }
-//  Get Users
-let users = await useApiFetch("users?limit=10000");
-// Map Users to Select Options
-users = users?.body?.docs?.map((e: any) => ({
-  label: e.name,
-  value: e.id,
-}));
+const users = ref<any[]>([]);
+const clients = ref<any[]>([]);
 
-//  Get Users
-let clients = await useApiFetch("client?limit=10000");
-// Map Users to Select Options
-clients = [
-  { label: "New Client", value: 0 },
-  ...clients?.body?.docs?.map((e: any) => ({
-    label: e.clientName,
-    value: e.id,
-  })),
-];
+onMounted(async () => {
+  try {
+    const [usersRes, clientsRes] = await Promise.all([
+      useApiFetch("users?limit=10000"),
+      useApiFetch("client?limit=10000")
+    ]);
+    
+    users.value = usersRes?.body?.docs?.map((e: any) => ({
+      label: e.name,
+      value: e.id,
+    })) || [];
+    
+    clients.value = [
+      { label: "New Client", value: 0 },
+      ...(clientsRes?.body?.docs?.map((e: any) => ({
+        label: e.clientName,
+        value: e.id,
+      })) || []),
+    ];
+  } catch (e) {
+    console.error('Failed to load form data:', e);
+  }
+});
 
 const onSubmit = handleSubmit((values: any, actions: any) => {
   emit("submit", {

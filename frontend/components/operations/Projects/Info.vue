@@ -144,22 +144,31 @@ el-form.mb-24( autocomplete="off"   @submit.prevent='onSubmit'   ref="myForm" la
     return yup.object(baseSchema);
   });
 
-  //  Get Users
-  let users = await useApiFetch("users");
-  // Map Users to Select Options
-  users = users?.body?.docs?.map((e: any) => ({
-    label: e.name,
-    value: e.id,
-  }));
-
-  const mappedClients = ref<{ label: string; value: any }[]>();
-  //  Get clients
-  let { clients } = await getClients();
-  // Map clients to Select Options
-  mappedClients.value = clients?.map((e: any) => ({
-    label: e.clientName,
-    value: e.id,
-  }));
+  const users = ref<any[]>([]);
+  const mappedClients = ref<{ label: string; value: any }[]>([]);
+  const clients = ref<any[]>([]);
+  
+  onMounted(async () => {
+    try {
+      const [usersRes, clientsRes] = await Promise.all([
+        useApiFetch("users"),
+        getClients()
+      ]);
+      
+      users.value = usersRes?.body?.docs?.map((e: any) => ({
+        label: e.name,
+        value: e.id,
+      })) || [];
+      
+      clients.value = clientsRes.clients || [];
+      mappedClients.value = clients.value.map((e: any) => ({
+        label: e.clientName,
+        value: e.id,
+      }));
+    } catch (e) {
+      console.error('Failed to load form data:', e);
+    }
+  });
 
   /**
    * Checks if the deal stage has been set to 'Cancelled'.

@@ -202,57 +202,74 @@ el-form(  autocomplete="off"   @submit.prevent='onSubmit'   ref="myForm" label-p
     emit("submit", formatedValues);
   });
 
-  let users = await useApiFetch("users");
-  users = users?.body?.docs?.map((e: any) => ({
-    label: e.name,
-    value: e.id,
-  }));
-
+  const users = ref<any[]>([]);
   const selectedLead = ref<any>([]);
-  const response = await getLeads();
-  const leads = response.leads;
+  const leads = ref<any[]>([]);
+  const mappedLeads = ref<any[]>([]);
 
-  const mappedLeads = leads?.map((e: any) => ({
-    label: e.name,
-    value: e.name,
-    id: e.id,
-  }));
+  onMounted(async () => {
+    try {
+      const [usersRes, leadsRes] = await Promise.all([
+        useApiFetch("users"),
+        getLeads()
+      ]);
+      
+      users.value = usersRes?.body?.docs?.map((e: any) => ({
+        label: e.name,
+        value: e.id,
+      })) || [];
+      
+      leads.value = leadsRes.leads || [];
+      mappedLeads.value = leads.value.map((e: any) => ({
+        label: e.name,
+        value: e.name,
+        id: e.id,
+      }));
 
-  const leadId = props.data?.leadId || route.query?.leadId;
+      const leadId = props.data?.leadId || route.query?.leadId;
 
-  if (props.data?.clientId) {
-    switchType.value = false;
-  }
-
-  if (leadId) {
-    let lead = selectedLead.value;
-
-    if (props.data?.leadId) {
-      lead = await getLead(leadId);
-      if (lead) {
-        selectedLead.value = lead;
+      if (props.data?.clientId) {
+        switchType.value = false;
       }
-    } else {
-      selectedLead.value = leads?.find((lead: any) => lead.id === leadId);
-    }
 
-    if (selectedLead.value) {
-      isEmail.value = Boolean(selectedLead.value.email);
-      isPhone.value = !isEmail.value && Boolean(selectedLead.value.phone);
-    }
-  }
+      if (leadId) {
+        if (props.data?.leadId) {
+          const lead = await getLead(leadId);
+          if (lead) {
+            selectedLead.value = lead;
+          }
+        } else {
+          selectedLead.value = leads.value.find((l: any) => l.id === leadId);
+        }
 
-  const mappedClients = ref<{ label: string; value: any }[]>();
-  //  Get clients
-  let { clients } = await getClients();
-  // Map clients to Select Options
-  mappedClients.value = clients?.map((e: any) => ({
-    label: e.clientName,
-    value: e.id,
-  }));
+        if (selectedLead.value) {
+          isEmail.value = Boolean(selectedLead.value.email);
+          isPhone.value = !isEmail.value && Boolean(selectedLead.value.phone);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load form data:', e);
+    }
+  });
+
+  const mappedClients = ref<{ label: string; value: any }[]>([]);
+  const clients = ref<any[]>([]);
+  
+  onMounted(async () => {
+    try {
+      const response = await getClients();
+      clients.value = response.clients || [];
+      mappedClients.value = clients.value.map((e: any) => ({
+        label: e.clientName,
+        value: e.id,
+      }));
+    } catch (e) {
+      console.error('Failed to load clients:', e);
+    }
+  });
 
   function getSelectedLead(e: any) {
-    selectedLead.value = leads?.find((lead: any) => lead.id === e.id);
+    selectedLead.value = leads.value?.find((lead: any) => lead.id === e.id);
     if (selectedLead.value?.email) {
       isEmail.value = true;
     } else if (selectedLead.value?.phone) {

@@ -129,41 +129,50 @@ el-form.mb-24(  autocomplete="off"   @submit.prevent='onSubmit'   ref="myForm" l
     emit("submit", formattedValues);
   });
 
-  let users = await useApiFetch("users");
-  users = users?.body?.docs?.map((e: any) => ({
-    label: e.name,
-    value: e.id,
-  }));
-
+  const users = ref<any[]>([]);
   const selectedLead = ref<any>([]);
-  const response = await getLeads();
-  const leads = response.leads;
+  const leads = ref<any[]>([]);
+  const mappedLeads = ref<any[]>([]);
 
-  const mappedLeads = leads?.map((e: any) => ({
-    label: e.name,
-    value: e.name,
-    id: e.id,
-  }));
+  onMounted(async () => {
+    try {
+      const [usersRes, leadsRes] = await Promise.all([
+        useApiFetch("users"),
+        getLeads()
+      ]);
+      
+      users.value = usersRes?.body?.docs?.map((e: any) => ({
+        label: e.name,
+        value: e.id,
+      })) || [];
+      
+      leads.value = leadsRes.leads || [];
+      mappedLeads.value = leads.value.map((e: any) => ({
+        label: e.name,
+        value: e.name,
+        id: e.id,
+      }));
 
-  const leadId = props.data?.leadId || route.query?.leadId;
+      const leadId = props.data?.leadId || route.query?.leadId;
+      if (leadId) {
+        if (props.data?.leadId) {
+          const lead = await getLead(leadId);
+          if (lead) {
+            selectedLead.value = lead;
+          }
+        } else {
+          selectedLead.value = leads.value.find((lead: any) => lead.id === leadId);
+        }
 
-  if (leadId) {
-    let lead = selectedLead.value;
-
-    if (props.data?.leadId) {
-      lead = await getLead(leadId);
-      if (lead) {
-        selectedLead.value = lead;
+        if (selectedLead.value) {
+          isEmail.value = Boolean(selectedLead.value.email);
+          isPhone.value = !isEmail.value && Boolean(selectedLead.value.phone);
+        }
       }
-    } else {
-      selectedLead.value = leads?.find((lead: any) => lead.id === leadId);
+    } catch (e) {
+      console.error('Failed to load form data:', e);
     }
-
-    if (selectedLead.value) {
-      isEmail.value = Boolean(selectedLead.value.email);
-      isPhone.value = !isEmail.value && Boolean(selectedLead.value.phone);
-    }
-  }
+  });
 
   function getSelectedLead(e: any) {
     selectedLead.value = leads?.find((lead: any) => lead.id === e.id);

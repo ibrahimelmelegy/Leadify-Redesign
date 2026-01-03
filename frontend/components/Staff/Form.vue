@@ -100,12 +100,17 @@
     emit("submit", formatedValues);
   });
 
-  const mappedRoles = ref<{ label: string; value: any }[]>();
-  //  Get roles
-  let repsonse = await useApiFetch("role");
-  // Map clients to Select Options
-  mappedRoles.value = repsonse.body?.docs?.map((e: any) => ({
-    label: e.name,
-    value: e.id,
-  }));
+  const mappedRoles = ref<{ label: string; value: any }[]>([]);
+  
+  onMounted(async () => {
+    try {
+      const response = await useApiFetch("role");
+      mappedRoles.value = response.body?.docs?.map((e: any) => ({
+        label: e.name,
+        value: e.id,
+      })) || [];
+    } catch (e) {
+      console.error('Failed to load roles:', e);
+    }
+  });
 </script>

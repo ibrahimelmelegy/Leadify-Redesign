@@ -152,11 +152,19 @@ const props = defineProps({
 });
 
 // Form options
-let users = await useApiFetch("users");
-const mappedUsers = users?.body?.docs?.map((e: any) => ({
-  label: e.name,
-  value: e.id,
-}));
+const mappedUsers = ref<any[]>([]);
+
+onMounted(async () => {
+  try {
+    const response = await useApiFetch("users");
+    mappedUsers.value = response?.body?.docs?.map((e: any) => ({
+      label: e.name,
+      value: e.id,
+    })) || [];
+  } catch (e) {
+    console.error('Failed to load users:', e);
+  }
+});
 
 watch(
   () => props.data,
