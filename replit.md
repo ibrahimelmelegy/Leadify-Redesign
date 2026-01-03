@@ -59,6 +59,33 @@ The application runs with two workflows:
 - Password: `admin123`
 
 ## Recent Changes
+- January 3, 2026: Comprehensive Feature & Security Enhancements
+  **Security Features:**
+  - Two-Factor Authentication (2FA) with QR code setup and backup codes
+  - Comprehensive audit logging system (backend/src/audit/)
+  - Account lockout protection after 5 failed login attempts
+  - Password policy validation with strength indicators
+  - Session management with active device tracking
+  
+  **Business Intelligence Features:**
+  - Lead Scoring system with automatic calculation (frontend/components/leads/LeadScoring.vue)
+  - Customer 360 Timeline for complete interaction history (frontend/components/client/CustomerTimeline.vue)
+  - Interactive Dashboard components with trend indicators (frontend/components/dashboard/)
+  - Advanced Notification Center with real-time updates (frontend/components/notifications/)
+  
+  **User Experience Enhancements:**
+  - Dark Mode with comprehensive CSS variables (frontend/assets/css/dark-mode.css)
+  - Export functionality for PDF, Excel, CSV (frontend/composables/useExport.ts)
+  - Onboarding Tour for new users (frontend/components/global/OnboardingTour.vue)
+  
+  **API Infrastructure:**
+  - API Versioning system (backend/src/utils/apiVersioning.ts)
+  - Webhooks for external integrations (backend/src/webhooks/)
+  
+  **New Pages:**
+  - Security Settings: /settings/security
+  - Audit Logs Viewer: /audit-logs
+
 - January 3, 2026: Code quality improvements
   - Added API rate limiting (100 req/min general, 5 req/15min for login)
   - Created database indexes for 30+ columns (performance optimization)
