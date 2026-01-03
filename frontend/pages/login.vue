@@ -76,16 +76,21 @@
       password: values.password,
     });
     if (response?.token) {
-      const accessToken = useCookie("access_token");
+      const accessToken = useCookie("access_token", {
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        path: "/",
+        sameSite: "lax",
+      });
       accessToken.value = response?.token;
       ElNotification({
         title: "Success",
         type: "success",
         message: response.message,
       });
-      // Use full page reload to ensure cookie is properly sent
-      await nextTick();
-      window.location.href = "/";
+      // Wait for cookie to be set then reload
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 500);
     } else {
       ElNotification({
         title: "Error",
