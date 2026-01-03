@@ -13,6 +13,14 @@ interface JwtPayload {
   id: string;
 }
 
+// In-memory cache for authenticated users (TTL: 5 minutes)
+const userCache = new Map<string, { user: any; expiry: number }>();
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+// Track last cleanup time to avoid cleaning on every request
+let lastCleanupTime = 0;
+const CLEANUP_INTERVAL = 60 * 1000; // Clean expired sessions every 1 minute max
+
 export const authenticateUser = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   const authHeader = req.header('Authorization');
   const token = authHeader ? authHeader.replace('Bearer ', '') : null;
@@ -23,17 +31,29 @@ export const authenticateUser = async (req: AuthenticatedRequest, res: Response,
 
   try {
     const SECRET_KEY = getJwtSecret();
-    // Decode the token to get the user ID
     const decoded = jwt.verify(token, SECRET_KEY) as JwtPayload;
     const userId = decoded.id;
+    const cacheKey = `${userId}:${token}`;
 
-    // Delete expired sessions for the user
-    await Session.destroy({
-      where: {
-        userId: userId,
-        expiresAt: { [Op.lt]: new Date() } // Delete sessions that are expired
-      }
-    });
+    // Check cache first
+    const cached = userCache.get(cacheKey);
+    if (cached && cached.expiry > Date.now()) {
+      req.user = cached.user;
+      next();
+      return;
+    }
+
+    // Delete expired sessions only periodically (not on every request)
+    const now = Date.now();
+    if (now - lastCleanupTime > CLEANUP_INTERVAL) {
+      lastCleanupTime = now;
+      Session.destroy({
+        where: {
+          userId: userId,
+          expiresAt: { [Op.lt]: new Date() }
+        }
+      }).catch(() => {}); // Fire and forget
+    }
 
     // Find the session in the database
     const session = await Session.findOne({
@@ -44,13 +64,13 @@ export const authenticateUser = async (req: AuthenticatedRequest, res: Response,
       }
     });
 
-    // If session is not found or the token is invalid, return error
     if (!session) {
+      userCache.delete(cacheKey);
       res.status(401).json({ message: 'Invalid or expired token' });
       return;
     }
 
-    // Attach the user to the request object for future use
+    // Attach the user to the request object
     const user = await User.findByPk(userId, {
       include: [{ model: Role, as: 'role' }]
     });
@@ -59,8 +79,11 @@ export const authenticateUser = async (req: AuthenticatedRequest, res: Response,
       return;
     }
 
+    // Cache the user
+    userCache.set(cacheKey, { user, expiry: Date.now() + CACHE_TTL });
+
     req.user = user;
-    next(); // Proceed to the next middleware or route handler
+    next();
   } catch (error) {
     res.status(401).json({ message: 'Authentication failed' });
   }

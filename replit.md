@@ -69,3 +69,7 @@ The application runs with two workflows:
     - Added 'all' permission support for admin full access
   - Fixed statistics components error handling:
     - Added try-catch blocks for API calls in LeadsSales, ProjectsOperations, FinancialBusinessMetrics
+  - Performance optimizations:
+    - Added in-memory user caching in backend auth middleware (5 min TTL)
+    - Added user caching in frontend auth middleware (avoids auth/me calls on every navigation)
+    - Changed session cleanup from every request to periodic (1 min interval)

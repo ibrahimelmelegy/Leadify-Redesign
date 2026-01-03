@@ -1,26 +1,52 @@
+// Cache user data to avoid repeated API calls
+let cachedUser: any = null;
+let lastTokenCheck: string | null = null;
+
 export default defineNuxtRouteMiddleware(async (to, from) => {
   try {
-    // Define public routes that do not require authentication
     const publicRoutes = ["/login", "/forget-password", "/reset-password", "/reset-complete"];
-    // Fetch authentication status
-    const response = await useApiFetch("auth/me");
-    // If user is not authenticated
-    if (!response?.user?.id) {
-      // Allow access to public routes
+    
+    // Check for token
+    const accessTokenCookie = useCookie('access_token');
+    let token = accessTokenCookie.value;
+    if (!token && typeof window !== 'undefined') {
+      token = localStorage.getItem('access_token');
+    }
+    
+    // If no token, handle public/private routes
+    if (!token) {
+      cachedUser = null;
+      lastTokenCheck = null;
       if (publicRoutes.some((route) => to.path.startsWith(route))) {
-        return; // Allow navigation to public route
+        return;
       }
-      // Redirect to login if the route is not public
       return navigateTo("/login");
     }
-    // If user is authenticated
+    
+    // If token changed or no cached user, fetch user data
+    if (token !== lastTokenCheck || !cachedUser) {
+      const response = await useApiFetch("auth/me");
+      if (response?.user?.id) {
+        cachedUser = response.user;
+        lastTokenCheck = token;
+      } else {
+        cachedUser = null;
+        lastTokenCheck = null;
+        if (publicRoutes.some((route) => to.path.startsWith(route))) {
+          return;
+        }
+        return navigateTo("/login");
+      }
+    }
+    
+    // User is authenticated, redirect away from public routes
     if (publicRoutes.some((route) => to.path.startsWith(route))) {
-      // Redirect authenticated users away from public routes (e.g., to homepage)
       return navigateTo("/");
     }
-    // Allow navigation to the target route
   } catch (error) {
-    console.error("Middleware error:", error); // Log unexpected errors
-    return navigateTo("/login"); // Redirect to login in case of an error
+    console.error("Middleware error:", error);
+    cachedUser = null;
+    lastTokenCheck = null;
+    return navigateTo("/login");
   }
 });
