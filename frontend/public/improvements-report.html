@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadify CRM - Improvements Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #ecf0f1;
+            border-radius: 5px;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding-right: 20px;
+        }
+        li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-right: 25px;
+        }
+        li:before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            position: absolute;
+            right: 0;
+        }
+        .category {
+            margin-bottom: 30px;
+        }
+        .file-path {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.9em;
+            color: #e74c3c;
+            direction: ltr;
+            display: inline-block;
+        }
+        .date {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .print-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 15px 30px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .print-btn:hover {
+            background: #2980b9;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .print-btn {
+                display: none;
+            }
+        }
+        .summary-box {
+            background: #e8f6f3;
+            border-left: 4px solid #1abc9c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: right;
+        }
+        th {
+            background: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>تقرير التحسينات - Leadify CRM</h1>
+        <p class="date">التاريخ: 3 يناير 2026</p>
+
+        <div class="summary-box">
+            <strong>ملخص:</strong> تم تنفيذ 8 تحسينات رئيسية تشمل الأمان والأداء وجودة الكود
+        </div>
+
+        <div class="category">
+            <h2>1. تحسينات الأمان (Security)</h2>
+            
+            <h3>Rate Limiting - تحديد معدل الطلبات</h3>
+            <ul>
+                <li>إضافة حماية من الهجمات المتكررة (100 طلب/دقيقة)</li>
+                <li>تحديد محاولات تسجيل الدخول (5 محاولات/15 دقيقة)</li>
+                <li>حماية من هجمات Brute Force</li>
+            </ul>
+            <p><span class="file-path">backend/src/utils/rateLimiter.ts</span></p>
+
+            <h3>Permission Middleware - صلاحيات المستخدمين</h3>
+            <ul>
+                <li>إضافة middleware للتحقق من الصلاحيات</li>
+                <li>دعم الصلاحية 'all' للمدير</li>
+                <li>تنظيف ذاكرة الصلاحيات عند تسجيل الخروج</li>
+            </ul>
+            <p><span class="file-path">backend/src/utils/permissionMiddleware.ts</span></p>
+            <p><span class="file-path">frontend/composables/usePermissions.ts</span></p>
+        </div>
+
+        <div class="category">
+            <h2>2. تحسينات الأداء (Performance)</h2>
+            
+            <h3>Database Indexes - فهارس قاعدة البيانات</h3>
+            <ul>
+                <li>إضافة أكثر من 30 فهرس على الأعمدة المستخدمة بكثرة</li>
+                <li>تسريع استعلامات البحث والفلترة</li>
+                <li>تحسين أداء الـ JOIN operations</li>
+            </ul>
+            
+            <table>
+                <tr>
+                    <th>الجدول</th>
+                    <th>الفهارس المضافة</th>
+                </tr>
+                <tr>
+                    <td>Users</td>
+                    <td>email, roleId, status, createdAt</td>
+                </tr>
+                <tr>
+                    <td>Sessions</td>
+                    <td>userId, token, expiresAt</td>
+                </tr>
+                <tr>
+                    <td>Leads</td>
+                    <td>email, status, leadSource, createdAt</td>
+                </tr>
+                <tr>
+                    <td>Opportunities</td>
+                    <td>stage, probability, leadId, createdAt</td>
+                </tr>
+                <tr>
+                    <td>Deals</td>
+                    <td>stage, opportunityId, price, createdAt</td>
+                </tr>
+                <tr>
+                    <td>Projects</td>
+                    <td>status, createdAt</td>
+                </tr>
+                <tr>
+                    <td>Clients</td>
+                    <td>email, createdAt</td>
+                </tr>
+                <tr>
+                    <td>Notifications</td>
+                    <td>userId, read, createdAt</td>
+                </tr>
+            </table>
+            <p><span class="file-path">backend/src/migrations/add-indexes.sql</span></p>
+        </div>
+
+        <div class="category">
+            <h2>3. معالجة الأخطاء (Error Handling)</h2>
+            
+            <h3>Centralized Error Handler</h3>
+            <ul>
+                <li>إنشاء composable موحد لمعالجة الأخطاء</li>
+                <li>رسائل خطأ واضحة للمستخدم</li>
+                <li>دعم الإشعارات (Success, Error, Warning, Info)</li>
+                <li>دالة handleAsync للتعامل مع الـ promises</li>
+            </ul>
+            <p><span class="file-path">frontend/composables/useErrorHandler.ts</span></p>
+            
+            <h3>رسائل الخطأ المدعومة:</h3>
+            <ul>
+                <li>NETWORK_ERROR - مشاكل الاتصال</li>
+                <li>UNAUTHORIZED - انتهاء الجلسة</li>
+                <li>FORBIDDEN - عدم وجود صلاحية</li>
+                <li>RATE_LIMITED - تجاوز الحد المسموح</li>
+                <li>INVALID_CREDENTIALS - بيانات دخول خاطئة</li>
+            </ul>
+        </div>
+
+        <div class="category">
+            <h2>4. تحسين TypeScript</h2>
+            
+            <h3>إضافة أنواع البيانات (Types)</h3>
+            <ul>
+                <li>إنشاء interfaces لجميع الكيانات</li>
+                <li>إزالة استخدام 'any' type</li>
+                <li>تحسين أمان الكود وقابلية الصيانة</li>
+            </ul>
+            
+            <table>
+                <tr>
+                    <th>النوع</th>
+                    <th>الخصائص الرئيسية</th>
+                </tr>
+                <tr>
+                    <td>User</td>
+                    <td>id, name, email, phone, status, roleId</td>
+                </tr>
+                <tr>
+                    <td>Lead</td>
+                    <td>id, name, email, status, leadSource</td>
+                </tr>
+                <tr>
+                    <td>Opportunity</td>
+                    <td>id, name, stage, probability, leadId</td>
+                </tr>
+                <tr>
+                    <td>Deal</td>
+                    <td>id, name, price, stage, opportunityId</td>
+                </tr>
+                <tr>
+                    <td>Client</td>
+                    <td>id, name, email, phone, company</td>
+                </tr>
+                <tr>
+                    <td>Project</td>
+                    <td>id, name, status, budget, clientId</td>
+                </tr>
+            </table>
+            <p><span class="file-path">frontend/types/index.ts</span></p>
+        </div>
+
+        <div class="category">
+            <h2>5. مكونات قابلة لإعادة الاستخدام</h2>
+            
+            <h3>ConfirmDialog Component</h3>
+            <ul>
+                <li>مربع حوار للتأكيد قبل الحذف</li>
+                <li>قابل للتخصيص (العنوان، الرسالة، النوع)</li>
+                <li>دعم أنواع متعددة (warning, danger, info)</li>
+            </ul>
+            <p><span class="file-path">frontend/components/global/ConfirmDialog.vue</span></p>
+        </div>
+
+        <div class="category">
+            <h2>6. توحيد استجابات API</h2>
+            
+            <h3>API Response Utilities</h3>
+            <ul>
+                <li>إنشاء هيكل موحد للاستجابات</li>
+                <li>دعم pagination</li>
+                <li>رسائل خطأ متسقة</li>
+            </ul>
+            <p><span class="file-path">backend/src/utils/apiResponse.ts</span></p>
+        </div>
+
+        <div class="summary-box" style="background: #fef9e7; border-color: #f39c12;">
+            <strong>ملاحظة:</strong> جميع التحسينات تم تطبيقها وتفعيلها. التطبيق يعمل بشكل طبيعي مع هذه التحسينات.
+        </div>
+
+        <button class="print-btn" onclick="window.print()">طباعة / حفظ كـ PDF</button>
+    </div>
+</body>
+</html>
