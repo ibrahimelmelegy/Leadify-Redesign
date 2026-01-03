@@ -41,7 +41,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true, vscode: { enabled: true } },
   devServer: {
     host: '0.0.0.0',
-    port: 5000,
+    port: parseInt(process.env.PORT || '5000'),
   },
   vite: {
     server: {

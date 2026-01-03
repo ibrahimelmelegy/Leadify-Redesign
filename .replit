@@ -65,7 +65,7 @@ outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd frontend && npx nuxt dev --host 0.0.0.0 --port 5000"
+args = "cd frontend && PORT=5000 npx nuxt dev --host 0.0.0.0 --port 5000"
 waitForPort = 5000
 
 [[ports]]
