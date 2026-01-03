@@ -97,3 +97,6 @@ The application runs with two workflows:
     - Changed to yup's built-in .email() validation which works correctly
   - Fixed deal forms (Invoice, Delivery):
     - Removed ClientOnly/VForm wrapper and fixed indentation
+  - Fixed permission system for admin:
+    - Updated hasPermission() to recognize 'all' permission for full admin access
+    - Admin role has permissions: {all} - now properly grants access to all features

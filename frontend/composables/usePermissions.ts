@@ -19,7 +19,7 @@ export async function usePermissions(isUpdated = false) {
   }
 
   const hasPermission = (permission: string): boolean => {
-    return permissions.value.includes(permission);
+    return permissions.value.includes('all') || permissions.value.includes(permission);
   };
 
   const hasAnyPermission = (perms: string[]): boolean => {
