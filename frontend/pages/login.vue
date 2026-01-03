@@ -82,7 +82,6 @@
       password: values.password,
     });
     if (response?.token) {
-      router.push("/");
       const accessToken = useCookie("access_token");
       accessToken.value = response?.token;
       ElNotification({
@@ -90,6 +89,7 @@
         type: "success",
         message: response.message,
       });
+      router.push("/");
     } else {
       ElNotification({
         title: "Error",
