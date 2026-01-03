@@ -54,6 +54,10 @@ The application runs with two workflows:
 - Role-based access control
 - Daily task management
 
+## Admin Login
+- Email: `admin@leadify.com`
+- Password: `admin123`
+
 ## Recent Changes
 - January 3, 2026: Initial setup on Replit
   - Extracted and configured backend/frontend from zip file
@@ -73,3 +77,7 @@ The application runs with two workflows:
     - Added in-memory user caching in backend auth middleware (5 min TTL)
     - Added user caching in frontend auth middleware (avoids auth/me calls on every navigation)
     - Changed session cleanup from every request to periodic (1 min interval)
+  - Fixed rendering issues:
+    - Converted all top-level await calls to onMounted() in form components
+    - Fixed layout blocking issues in default.vue and global/Menu.vue
+  - Configured separate Backend and Frontend workflows for Replit
