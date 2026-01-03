@@ -1,25 +1,22 @@
 <template lang="pug">
-ClientOnly
-  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
-    el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
-      slot
-      .card.m-auto.bg-white.p-10.rounded-3xl(class="2xl:w-1/2 w-[90%]")
-        .upload-img-staff.flex.items-center.gap-3.mb-6
-          InputUploadImage(name="profilePicture" type="image" sizeLook="small" :value="data?.profilePicture" :isEdit="route.path.includes('edit')" model="USER")
-          .label
-            .flex.items-center.gap-2.font-medium.mb-1
-              p(class="text-neutral-800") Upload Image
-              span(class="text-neutral-500 text-xs") (Optional)
-            span(class="text-neutral-400 text-xs") JPG, JPEG, PNG, GIF (5 MB Maximum)
-
-        .grid.grid-cols-2.gap-3
-          InputText(label="Full Name" name="name" :value="data?.name" )
-          InputText(label="Email"  name="email" :value="data?.email" @value="val=> isEmail = !!val" )
-          InputPhone.mt-6(label=" Phone Number"  name="phone" @value="val=> isPhone = !!val" :value="data?.phone" @validphone="val=> validPhone = val" mode="international" )
-          InputSelect.mt-6(label="Role" placeholder="Select Role" name="roleId" :options="mappedRoles" :value="data?.roleId" )
-          InputSelect(label="Statues" name="status" :options="staffStatuses" :value="data?.status" v-if="editMode")
-          InputText(:class="{'col-span-2': !editMode}" label="Password" name="password" type="password" :value="data?.password" )
-  </template>
+el-form(autocomplete="off" @submit.prevent="onSubmit" ref="myForm" label-position="top")
+  slot
+  .card.m-auto.bg-white.p-10.rounded-3xl(class="2xl:w-1/2 w-[90%]")
+    .upload-img-staff.flex.items-center.gap-3.mb-6
+      InputUploadImage(name="profilePicture" type="image" sizeLook="small" :value="data?.profilePicture" :isEdit="route.path.includes('edit')" model="USER")
+      .label
+        .flex.items-center.gap-2.font-medium.mb-1
+          p(class="text-neutral-800") Upload Image
+          span(class="text-neutral-500 text-xs") (Optional)
+        span(class="text-neutral-400 text-xs") JPG, JPEG, PNG, GIF (5 MB Maximum)
+    .grid.grid-cols-2.gap-3
+      InputText(label="Full Name" name="name" :value="data?.name" )
+      InputText(label="Email"  name="email" :value="data?.email" @value="val=> isEmail = !!val" )
+      InputPhone.mt-6(label=" Phone Number"  name="phone" @value="val=> isPhone = !!val" :value="data?.phone" @validphone="val=> validPhone = val" mode="international" )
+      InputSelect.mt-6(label="Role" placeholder="Select Role" name="roleId" :options="mappedRoles" :value="data?.roleId" )
+      InputSelect(label="Statues" name="status" :options="staffStatuses" :value="data?.status" v-if="editMode")
+      InputText(:class="{'col-span-2': !editMode}" label="Password" name="password" type="password" :value="data?.password" )
+</template>
 
 <script lang="ts" setup>
   import { useForm } from "vee-validate";

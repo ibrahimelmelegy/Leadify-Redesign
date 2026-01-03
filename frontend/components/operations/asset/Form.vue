@@ -1,14 +1,12 @@
 <template lang="pug">
-ClientOnly
-  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
-    el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
-      slot
-      div(:class="{'2xl:w-1/2 w-[90%] card m-auto bg-white p-10 rounded-3xl': !isModal}")
-        InputText(label="Asset Name" name="name" placeholder="Enter Assets Name" :value="data?.name" )
-        .grid.grid-cols-2.gap-3
-          InputText.mt-4(label="Rent Price"  placeholder="Enter Rent Price SAR" name="rentPrice" :value="data?.rentPrice" )
-          InputText.mt-4(label="Buy Price"  placeholder="Enter Buy Price SAR" name="buyPrice" :value="data?.buyPrice" )
-      slot(name="modal-footer")
+el-form(autocomplete="off" @submit.prevent="onSubmit" ref="myForm" label-position="top")
+  slot
+  div(:class="{'2xl:w-1/2 w-[90%] card m-auto bg-white p-10 rounded-3xl': !isModal}")
+    InputText(label="Asset Name" name="name" placeholder="Enter Assets Name" :value="data?.name" )
+    .grid.grid-cols-2.gap-3
+      InputText.mt-4(label="Rent Price"  placeholder="Enter Rent Price SAR" name="rentPrice" :value="data?.rentPrice" )
+      InputText.mt-4(label="Buy Price"  placeholder="Enter Buy Price SAR" name="buyPrice" :value="data?.buyPrice" )
+  slot(name="modal-footer")
 </template>
 
 <script lang="ts" setup>

@@ -1,28 +1,21 @@
 <template lang="pug">
-ClientOnly
-  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
-    el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
-      slot
-      div(:class="{'2xl:w-1/2 w-[90%] card m-auto bg-white p-10 rounded-3xl': !isModal}")
-        .grid.grid-cols-2.gap-3
-          InputText.mt-4(label="Name"  placeholder="Enter Name" name="name" :value="data?.name" )
-          InputSelect.mt-4(label="Priority" name="priority" :options="taskPriorityOptions" :value="data?.priority" )
-          InputSelect.mt-4(label="Status" name="status" :options="taskStatusOptions" :value="data?.status ?? route.query.status.toUpperCase()" )
-          InputSelect.mt-4(label="User" name="userId" :options="users" :value="data?.userId" )
-          InputSelect.mt-4(label="Client" name="clientId" :options="clients"  @change="[onFetchClient($event?.value)]" :value="data?.clientId" )
-          InputSelect.mt-4(label="Sales Representative" name="salesRepresentativeId" :options="users" :value="data?.salesRepresentativeId" )
-          InputText.mt-4(label="Cost"  placeholder="Enter Cost SAR" name="cost" :value="data?.cost" )
-          InputText.mt-4(label="Down Payment"  placeholder="Enter Down Payment" name="downPayment" :value="data?.downPayment" )
-          InputText.mt-4(label="Total Paid"  placeholder="Enter Total Paid" name="totalPaid" :value="data?.totalPaid" )
-          //- InputDate.mt-4(label="Start Date"  placeholder="Enter Start  Date"  :value="data?.startDate || new Date()" name="startDate" )
-          //- InputDate.mt-4(label="End Date"  placeholder="Enter End  Date"  :value="data?.endDate || new Date()" name="endDate" )
-        .grid.grid-cols-1.gap-3
-          InputText(type="textarea" placeholder="Notes"  name="notes" :value="data?.notes" )
-      slot(name="modal-footer")
-
- 
-  
-    </template>
+el-form(autocomplete="off" @submit.prevent="onSubmit" ref="myForm" label-position="top")
+  slot
+  div(:class="{'2xl:w-1/2 w-[90%] card m-auto bg-white p-10 rounded-3xl': !isModal}")
+    .grid.grid-cols-2.gap-3
+      InputText.mt-4(label="Name"  placeholder="Enter Name" name="name" :value="data?.name" )
+      InputSelect.mt-4(label="Priority" name="priority" :options="taskPriorityOptions" :value="data?.priority" )
+      InputSelect.mt-4(label="Status" name="status" :options="taskStatusOptions" :value="data?.status ?? route.query.status.toUpperCase()" )
+      InputSelect.mt-4(label="User" name="userId" :options="users" :value="data?.userId" )
+      InputSelect.mt-4(label="Client" name="clientId" :options="clients"  @change="[onFetchClient($event?.value)]" :value="data?.clientId" )
+      InputSelect.mt-4(label="Sales Representative" name="salesRepresentativeId" :options="users" :value="data?.salesRepresentativeId" )
+      InputText.mt-4(label="Cost"  placeholder="Enter Cost SAR" name="cost" :value="data?.cost" )
+      InputText.mt-4(label="Down Payment"  placeholder="Enter Down Payment" name="downPayment" :value="data?.downPayment" )
+      InputText.mt-4(label="Total Paid"  placeholder="Enter Total Paid" name="totalPaid" :value="data?.totalPaid" )
+    .grid.grid-cols-1.gap-3
+      InputText(type="textarea" placeholder="Notes"  name="notes" :value="data?.notes" )
+  slot(name="modal-footer")
+</template>
 
 <script lang="ts" setup>
 import { useForm } from "vee-validate";
