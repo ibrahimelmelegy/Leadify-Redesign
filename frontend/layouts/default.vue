@@ -45,6 +45,7 @@ import { storeToRefs } from "pinia";
 import { useMain } from "~/stores/common";
 import { ArrowRight, Search, Plus } from "@element-plus/icons-vue";
 import { ElNotification } from "element-plus";
+import { clearUser } from "~/composables/useUser";
 const mainData = useMain();
 const { fullNav, mobile, hideNav } = storeToRefs(mainData);
 const { width, height } = useWindowSize();
@@ -103,9 +104,13 @@ function openNav() {
 async function logout() {
   const response = await useApiFetch("auth/logout", "POST");
   if (response?.message === "Logged out successfully") {
-    router.push("/login");
+    const { clearPermissions } = await usePermissions();
+    clearPermissions();
+    clearUser();
     const accessToken = useCookie("access_token");
     accessToken.value = "";
+    localStorage.removeItem("access_token");
+    router.push("/login");
     ElNotification({
       title: "Success",
       type: "success",

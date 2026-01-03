@@ -32,6 +32,7 @@ import roleRoutes from './role/roleRoutes';
 import settingRoutes from './setting/settingRoutes';
 import insightRoutes from './insights/insightRoutes';
 import dailyTaskRoutes from './dailyTask/dailyTaskRoutes';
+import { rateLimiter, loginRateLimiter } from './utils/rateLimiter';
 
 const fileUpload = require('express-fileupload');
 
@@ -51,6 +52,10 @@ app.use(middleware.handle(i18next));
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
+
+// Rate limiting middleware
+app.use('/api', rateLimiter({ maxRequests: 100, windowMs: 60000 }));
+app.use('/api/auth/login', loginRateLimiter());
 
 const corsOrigins = (process.env.CORS_ORIGIN || '').split(',').map(s => s.trim()).filter(Boolean);
 app.use(
