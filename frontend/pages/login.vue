@@ -48,12 +48,6 @@
       .email()
       .max(50)
       .required()
-      .matches(noArabicRegx, "validEmail")
-      .test(
-        "is-valid",
-        (message: any) => "valid Email",
-        (value: any) => (value ? isEmailValidator(value) : new yup.ValidationError("Invalid value"))
-      )
       .label("email"),
     // password: yup
     //   .string()
