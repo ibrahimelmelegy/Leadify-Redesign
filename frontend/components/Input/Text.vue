@@ -2,7 +2,7 @@
 el-form-item(:label="label" :error='errorMessage' class="!mb-0" label-position="top")
     template(#label)
       p {{ label }} #[span.opacity-50  {{optional ?  "optional" : "" }}]
-    el-input(size="large" :type="type" rows='4' :autosize="{ minRows: 4 }" :step="step" :min="min" :inputmode="type==='number' ?'decimal' : ''" :autocomplete="type==='password' ? 'new-password' : null" :show-password="type==='password' ? true : null"  :placeholder='placeholder ? placeholder : label' v-model='inputValue' :disabled="disabled" :name="name")
+    el-input(size="large" :type="type" :rows="4" :autosize="{ minRows: 4 }" :step="step" :min="min" :inputmode="type==='number' ?'decimal' : ''" :autocomplete="type==='password' ? 'new-password' : null" :show-password="type==='password' ? true : null"  :placeholder='placeholder ? placeholder : label' v-model='inputValue' :disabled="disabled" :name="name")
       template(#append v-if="append")
         slot
 </template>
