@@ -72,6 +72,13 @@ export const HasPermission = (requiredPermissions: string[]) => {
       if (!req.user || !req.user.role || !req.user.role.permissions) throw new BaseError(ERRORS.ACCESS_DENIED);
 
       const userPermissions = new Set(req.user.role.permissions);
+      
+      // Check if user has 'all' permission (admin access)
+      if (userPermissions.has('all')) {
+        next();
+        return;
+      }
+      
       const hasAnyPermission = requiredPermissions.some(permission => userPermissions.has(permission));
 
       if (!hasAnyPermission) throw new BaseError(ERRORS.ACCESS_DENIED);
