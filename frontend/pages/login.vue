@@ -29,8 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-    import * as yup from "yup";
-  import isEmailValidator from "validator/lib/isEmail";
+  import * as yup from "yup";
   import { useAuthStore } from "~/stores/auth";
   const auth = useAuthStore();
   import { useMain } from "~/stores/common";
@@ -41,27 +40,13 @@
     layout: "empty",
   });
 
-  const noSpecialChar = /^[a-zA-Z\u0621-\u064A\s]+$/;
-  const noArabicRegx = /^[^\u0600-\u06FF]+$/;
   const formSchema = yup.object({
     email: yup
       .string()
-      .test('is-valid-email', 'email must be a valid email', (value) => {
-        if (!value) return false;
-        return isEmailValidator(value);
-      })
+      .email('email must be a valid email')
       .max(50)
       .required()
       .label("email"),
-    // password: yup
-    //   .string()
-    //   .required()
-    //   .label('password')
-    //   .matches(/^\S*$/, 'passwordValidateSpaces')
-    //   .matches(/^(?=.*[A-Za-z]).*$/, 'passwordValidateLetter')
-    //   .matches(/^[~`!@#$%^&*()_+=[\]\\{}|;':",.\/<>?a-zA-Z0-9-]+$/, 'passwordValidateEnglish')
-    //   .max(50)
-    //   .min(12),
     password: yup.string().required().label("password").max(50),
   });
 

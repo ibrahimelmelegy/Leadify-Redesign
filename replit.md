@@ -67,7 +67,6 @@ The application runs with two workflows:
   - Disabled HMR for stable development in Replit environment
   - Fixed authentication flow:
     - Added localStorage fallback for token storage (iframe compatibility)
-    - Fixed login page email validation using validator library's isEmail
     - Corrected cookie storage timing before redirect
   - Fixed permission system:
     - Added 'all' permission support for admin full access
@@ -93,3 +92,8 @@ The application runs with two workflows:
     - Forms use useForm() hook from VeeValidate for validation, NOT VForm component wrapper
     - Forms fixed: leads, client, opportunity, deal/Information, Proposal, Projects/Info, Projects/ManPower, Projects/Folder
     - Added missing imports in Proposal/Form.vue (proposalRelatedTypes, ProposalType, etc.)
+  - Fixed login page email validation:
+    - Removed validator/lib/isEmail dependency that was causing validation failures
+    - Changed to yup's built-in .email() validation which works correctly
+  - Fixed deal forms (Invoice, Delivery):
+    - Removed ClientOnly/VForm wrapper and fixed indentation
