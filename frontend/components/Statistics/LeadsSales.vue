@@ -52,9 +52,24 @@
 
   const colorPalette = ["#7849ff", "#9360ff", "#9360ff"];
 
-  const leadStats = ref(await getLeadsStatics());
+  const defaultStats = {
+    firstCards: [],
+    secondCards: [],
+    dealsPipeline: {},
+    opportunityStages: {},
+    salesPerformance: [],
+  };
 
-  const barChartOptions = getBarChartData(leadStats.value?.dealsPipeline, colorPalette);
-  const pieChartOptions = getPieChartsData(leadStats.value?.opportunityStages, colorPalette);
-  const lineChartOptions = getIncreaseLineChart(leadStats.value?.salesPerformance, colorPalette);
+  let fetchedStats = defaultStats;
+  try {
+    fetchedStats = await getLeadsStatics() || defaultStats;
+  } catch (error) {
+    console.error("Failed to load lead statistics:", error);
+  }
+
+  const leadStats = ref(fetchedStats);
+
+  const barChartOptions = getBarChartData(leadStats.value?.dealsPipeline || {}, colorPalette);
+  const pieChartOptions = getPieChartsData(leadStats.value?.opportunityStages || {}, colorPalette);
+  const lineChartOptions = getIncreaseLineChart(leadStats.value?.salesPerformance || [], colorPalette);
 </script>

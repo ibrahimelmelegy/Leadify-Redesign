@@ -61,3 +61,11 @@ The application runs with two workflows:
   - Configured Nuxt dev proxy for API requests
   - Fixed TypeScript compilation errors
   - Disabled HMR for stable development in Replit environment
+  - Fixed authentication flow:
+    - Added localStorage fallback for token storage (iframe compatibility)
+    - Fixed login page email validation and added required label props
+    - Corrected cookie storage timing before redirect
+  - Fixed permission system:
+    - Added 'all' permission support for admin full access
+  - Fixed statistics components error handling:
+    - Added try-catch blocks for API calls in LeadsSales, ProjectsOperations, FinancialBusinessMetrics

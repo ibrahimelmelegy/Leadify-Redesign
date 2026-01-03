@@ -57,10 +57,23 @@
 <script lang="ts" setup>
   import VChart from "vue-echarts";
 
-  // fake data
   const colorPalette = ["#7849ff", "#9360ff", "#9360ff"];
 
-  const projectStats = ref(await getProjectOperationsStatics());
+  const defaultStats = {
+    firstCards: [],
+    projectsByStatus: {},
+    pieChart_one: { title: '', options: {} },
+    pieChart_two: { title: '', options: {} },
+  };
 
-  const barChartOptions = getBarHorizontalChartData(projectStats.value?.projectsByStatus, colorPalette);
+  let fetchedStats = defaultStats;
+  try {
+    fetchedStats = await getProjectOperationsStatics() || defaultStats;
+  } catch (error) {
+    console.error("Failed to load project statistics:", error);
+  }
+
+  const projectStats = ref(fetchedStats);
+
+  const barChartOptions = getBarHorizontalChartData(projectStats.value?.projectsByStatus || {}, colorPalette);
 </script>

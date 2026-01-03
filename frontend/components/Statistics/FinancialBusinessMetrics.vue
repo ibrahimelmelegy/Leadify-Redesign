@@ -11,11 +11,18 @@
 <script lang="ts" setup>
   import VChart from "vue-echarts";
 
-  // fake data
   const colorPalette = ["#7849ff", "#9360ff", "#9360ff"];
 
-  const bussinesStats = ref(await getBussinesStatics());
+  const defaultStats = {
+    firstCards: [],
+  };
 
-  // const barChartOptions = getBarHorizontalChartData(bussinesStats.value?.projectsByStatus, colorPalette);
-  // const pieChartOptions = getPieChartsData(dummyBarChartData, colorPalette);
+  let fetchedStats = defaultStats;
+  try {
+    fetchedStats = await getBussinesStatics() || defaultStats;
+  } catch (error) {
+    console.error("Failed to load business statistics:", error);
+  }
+
+  const bussinesStats = ref(fetchedStats);
 </script>
