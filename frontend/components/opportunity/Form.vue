@@ -1,35 +1,31 @@
 <template lang="pug">
-ClientOnly
-  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
-    el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
-      slot
-      .card.m-auto.bg-white.p-10.rounded-3xl(class="2xl:w-1/2 w-[90%] ")
-        el-switch.my-4(v-if="!editMode" v-model="switchType", size="large" inline-prompt, style="--el-switch-on-color: #7849FF; --el-switch-off-color: #918E98", active-text="Select Lead", inactive-text="Select Client")
-        .flex.justify-between.items-center.mb-6(v-if="switchType")
-          h3.text-xl.font-semibold Lead Information
-          el-switch.ml-2(v-if="!editMode" v-model="switchValue", size="large" inline-prompt, style="--el-switch-on-color: #7849FF; --el-switch-off-color: #918E98", active-text="Existing Lead", inactive-text="New Lead")
-        .grid.grid-cols-2.gap-3(v-if="switchType")
-          component(:is="isLeads" label=" Lead Name"  name="leadName" :options="mappedLeads" :value="selectedLead?.name" @change="getSelectedLead" :disabled="editMode" )
-          InputText(label="Company Name"  name="companyName" :value="selectedLead?.companyName" :disabled="editMode" is-form)
-          InputText(label="Email"  name="email" :value="selectedLead?.email" @value="val=> isEmail = !!val" :disabled="editMode" is-form)
-          InputPhone(label=" Phone Number"  name="phone" :value="selectedLead?.phone" @value="val=> isPhone = !!val" @validphone="val=> validPhone = val" mode="international" :disabled="editMode")
-        h3.text-xl.font-semibold.my-6 Opportunity Information
-        .grid.grid-cols-2.gap-3
-          InputSelect(v-if="!switchType" label=" Client" name="clientId" :options="mappedClients" :value="data?.clientId" )
-          InputText(label=" Opportunity Name" name="opportunityName" :value="data?.name" )
-          InputSelect(label=" Opportunity Stage" name="opportunityStage" :options="stageOptions" :value="data?.stage" @change="checkIfCancelled" )
-          InputText(label=" Profit (optional)" type="number" placeholder="Enter Profit" name="profit" :value="data?.profit" )
-          InputSelect(:class="{'col-span-2': !switchType}" label=" Assign User" name="assignUser" isMultiple :options="users" :value="users?.filter((user: any) => data?.users?.map((user: any) => user.id)?.includes(user.value))?.map((user: any) => user.value)" )
-        .grid.grid-cols-2.gap-3
-          InputText.mt-4(label=" Estimated Budget (optional)" type="number" placeholder="Choose Estimated Budget SAR" name="estimatedValue" :value="data?.estimatedValue" )
-          InputDate.mt-4(label=" Expected Close Date (optional)" disabledDate="past" placeholder="Enter Expected Close Date" :value="data?.expectedCloseDate || new Date()" name="expectedCloseDate" )
-          InputSelect(label=" Priority (optional)" name="priority"  placeholder="Choose Priority" :options="priorityOptions" :value="data?.priority" )
-          InputText(label=" Products/services (optional)" name="interestedIn"  placeholder="Enter Products/services"  :value="data?.interestedIn" )
-        InputSelect(label=" Next Steps" isMultiple name="nextSteps" :options="stepsOptions" :value="data?.nextSteps" )
-        InputSelect(label=" Reason for lose" name="reasons" :options="reasonOptions" :value="data?.reasonOfLose" v-if="isLose" )
-        InputText(type="textarea" placeholder="Notes"  name="notes" :value="data?.notes" )
-
-        //- InputText(type="textarea" placeholder="Notes"  name="notes" :value="data?.notes" )
+el-form(autocomplete="off" @submit.prevent="onSubmit" ref="myForm" label-position="top")
+  slot
+  .card.m-auto.bg-white.p-10.rounded-3xl(class="2xl:w-1/2 w-[90%] ")
+    el-switch.my-4(v-if="!editMode" v-model="switchType", size="large" inline-prompt, style="--el-switch-on-color: #7849FF; --el-switch-off-color: #918E98", active-text="Select Lead", inactive-text="Select Client")
+    .flex.justify-between.items-center.mb-6(v-if="switchType")
+      h3.text-xl.font-semibold Lead Information
+      el-switch.ml-2(v-if="!editMode" v-model="switchValue", size="large" inline-prompt, style="--el-switch-on-color: #7849FF; --el-switch-off-color: #918E98", active-text="Existing Lead", inactive-text="New Lead")
+    .grid.grid-cols-2.gap-3(v-if="switchType")
+      component(:is="isLeads" label=" Lead Name" name="leadName" :options="mappedLeads" :value="selectedLead?.name" @change="getSelectedLead" :disabled="editMode")
+      InputText(label="Company Name" name="companyName" :value="selectedLead?.companyName" :disabled="editMode" is-form)
+      InputText(label="Email" name="email" :value="selectedLead?.email" @value="val=> isEmail = !!val" :disabled="editMode" is-form)
+      InputPhone(label=" Phone Number" name="phone" :value="selectedLead?.phone" @value="val=> isPhone = !!val" @validphone="val=> validPhone = val" mode="international" :disabled="editMode")
+    h3.text-xl.font-semibold.my-6 Opportunity Information
+    .grid.grid-cols-2.gap-3
+      InputSelect(v-if="!switchType" label=" Client" name="clientId" :options="mappedClients" :value="data?.clientId")
+      InputText(label=" Opportunity Name" name="opportunityName" :value="data?.name")
+      InputSelect(label=" Opportunity Stage" name="opportunityStage" :options="stageOptions" :value="data?.stage" @change="checkIfCancelled")
+      InputText(label=" Profit (optional)" type="number" placeholder="Enter Profit" name="profit" :value="data?.profit")
+      InputSelect(:class="{'col-span-2': !switchType}" label=" Assign User" name="assignUser" isMultiple :options="users" :value="users?.filter((user: any) => data?.users?.map((user: any) => user.id)?.includes(user.value))?.map((user: any) => user.value)")
+    .grid.grid-cols-2.gap-3
+      InputText.mt-4(label=" Estimated Budget (optional)" type="number" placeholder="Choose Estimated Budget SAR" name="estimatedValue" :value="data?.estimatedValue")
+      InputDate.mt-4(label=" Expected Close Date (optional)" disabledDate="past" placeholder="Enter Expected Close Date" :value="data?.expectedCloseDate || new Date()" name="expectedCloseDate")
+      InputSelect(label=" Priority (optional)" name="priority" placeholder="Choose Priority" :options="priorityOptions" :value="data?.priority")
+      InputText(label=" Products/services (optional)" name="interestedIn" placeholder="Enter Products/services" :value="data?.interestedIn")
+    InputSelect(label=" Next Steps" isMultiple name="nextSteps" :options="stepsOptions" :value="data?.nextSteps")
+    InputSelect(label=" Reason for lose" name="reasons" :options="reasonOptions" :value="data?.reasonOfLose" v-if="isLose")
+    InputText(type="textarea" placeholder="Notes" name="notes" :value="data?.notes")
 </template>
 
 <script lang="ts" setup>

@@ -1,21 +1,18 @@
 <template lang="pug">
-ClientOnly
-  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
-    el-form(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
-      slot
-      .card.m-auto.bg-white.p-10.rounded-3xl(class="2xl:w-1/2 w-[90%] ")
-        .grid.grid-cols-2.gap-3
-          InputText(label="Lead Name"  name="leadName" :value="data?.name" )
-          InputText(label="Company Name"  name="companyName" :value="data?.companyName" )
-          InputText.mt-4(label="Email"  name="email" :value="data?.email" @value="val=> isEmail = !!val" )
-          InputPhone.mt-4(label=" Phone Number"  name="phone" @value="val=> isPhone = !!val" :value="data?.phone" @validphone="val=> validPhone = val" mode="international" )
-          InputSelect(label=" Lead State" name="leadState" :options="leadStates" :value="data?.status" )
-          InputSelect(label=" Lead Source" name="leadSource" :options="leadSources" :value="data?.leadSource" @change="checkIfOtherSource" )
-        InputText(label="Other Lead Source"  name="otherSource" v-if="isOtherSource" :value="data?.otherSource" )
-        InputDate.mt-4(label="Last Contact Date" v-if="route.path.includes('edit')" placeholder="Enter Last Contact Date" disabledDate="future" :value="data?.lastContactDate || new Date()" name="lastContactDate" )
-        InputSelect.mt-4(label=" Assign User" name="assignUser" isMultiple :options="users" :value="users?.filter((user: any) => data?.users?.map((user: any) => user.id)?.includes(user.value))?.map((user: any) => user.value)"  )
-        InputText(type="textarea" placeholder="Notes"  name="notes" :value="data?.notes" )
-
+el-form(autocomplete="off" @submit.prevent="onSubmit" ref="myForm" label-position="top")
+  slot
+  .card.m-auto.bg-white.p-10.rounded-3xl(class="2xl:w-1/2 w-[90%] ")
+    .grid.grid-cols-2.gap-3
+      InputText(label="Lead Name" name="leadName" :value="data?.name")
+      InputText(label="Company Name" name="companyName" :value="data?.companyName")
+      InputText.mt-4(label="Email" name="email" :value="data?.email" @value="val=> isEmail = !!val")
+      InputPhone.mt-4(label=" Phone Number" name="phone" @value="val=> isPhone = !!val" :value="data?.phone" @validphone="val=> validPhone = val" mode="international")
+      InputSelect(label=" Lead State" name="leadState" :options="leadStates" :value="data?.status")
+      InputSelect(label=" Lead Source" name="leadSource" :options="leadSources" :value="data?.leadSource" @change="checkIfOtherSource")
+    InputText(label="Other Lead Source" name="otherSource" v-if="isOtherSource" :value="data?.otherSource")
+    InputDate.mt-4(label="Last Contact Date" v-if="route.path.includes('edit')" placeholder="Enter Last Contact Date" disabledDate="future" :value="data?.lastContactDate || new Date()" name="lastContactDate")
+    InputSelect.mt-4(label=" Assign User" name="assignUser" isMultiple :options="users" :value="users?.filter((user: any) => data?.users?.map((user: any) => user.id)?.includes(user.value))?.map((user: any) => user.value)")
+    InputText(type="textarea" placeholder="Notes" name="notes" :value="data?.notes")
 </template>
 
 <script lang="ts" setup>

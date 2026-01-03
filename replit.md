@@ -86,8 +86,10 @@ The application runs with two workflows:
     - Updated login.vue to wrap form with VForm component and ClientOnly for SSR compatibility
     - Fixed plugin errors in quill.client.js and cropper.ts (removed invalid .use() calls)
   - Fixed Menu component: changed invalid el-menu-items to el-menu-item-group
-  - Fixed ALL forms across Sales and Operations sections (~40+ forms):
-    - Applied VForm wrapper pattern: `ClientOnly > VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema") > el-form(@submit.prevent="formHandleSubmit(onSubmit)")`
-    - Removed `:validationSchema` from el-form (not an Element Plus prop)
-    - Fixed pug indentation issues across all form components
-    - Forms fixed: leads, client, opportunity, deal (Invoice, Delivery, Information), Staff, Role, Proposal, vehicle, service, asset, manPower, daily-tasks, Projects (Info, ManPower, Folder), reset-password, forget-password
+  - Fixed form validation across Sales and Operations sections:
+    - REVERTED VForm wrapper pattern - was conflicting with existing useForm() hooks
+    - Correct pattern: el-form(@submit.prevent="onSubmit") with useForm({ validationSchema }) in script
+    - Fixed pug indentation issues (changed 8-space to proper 2/4-space hierarchy)
+    - Forms use useForm() hook from VeeValidate for validation, NOT VForm component wrapper
+    - Forms fixed: leads, client, opportunity, deal/Information, Proposal, Projects/Info, Projects/ManPower, Projects/Folder
+    - Added missing imports in Proposal/Form.vue (proposalRelatedTypes, ProposalType, etc.)

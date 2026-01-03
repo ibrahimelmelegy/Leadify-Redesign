@@ -1,40 +1,38 @@
 <template lang="pug">
-ClientOnly
-  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
-    el-form.mb-24(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top" :key="project")
-      slot
-      .card.m-auto.bg-white.p-10.rounded-3xl(class="w-[90%] ")
-        .grid.grid-cols-2.gap-3
-          InputText.mt-4(label="Project Name"  placeholder="Enter Project Name" name="name" :value="project?.name" )
-          InputText.mt-4(label=" Project Type" placeholder="Enter Project Type" name="type" :value="project?.type"  )
-          InputSelect.mt-4(label=" Category" name="category" :options="projectCategories" :value="project?.category" @change="checkIfEtimadProject" )
-          InputSelect.mt-4(label=" Client" name="client" :options="mappedClients" :value="mappedClients?.find((client: any) => client.value === project?.clientId)?.value" )
-          InputDate(label=" Start Date"  placeholder="Enter Start Date" :value="project?.startDate" name="startDate" )
-          InputDate(label="End Date"  placeholder="Enter End Date" :value="project?.endDate" name="endDate" )
-          InputText.mt-4(label=" Project Duration"  placeholder="Enter Project Duration" name="duration" :value="project?.duration" )
-          InputSelect.mt-4(label=" Assign User" isMultiple name="assignUser" :options="users" :value="users?.filter((user: any) => project?.assignedUsers?.map((user: any) => user.id)?.includes(user.value))?.map((user: any) => user.value)"  )
-        InputSelect.mt-4(label=" Status " name="status" :options="projectStatuses" :value="project?.status"  @change="checkIfCancelled" )
-        InputText.mt-4(label="Cancel Reason" type="textarea" v-if="isCancelled" placeholder="Enter Cancel Reason"  name="cancelReason" :value="project?.cancelledReason" )
-        InputText.mt-4(label="Project Description" type="textarea" placeholder="Enter Project Description"  name="description" :value="project?.description" )
-        template(v-if="isEtimadProject")
-          .title.font-bold.text-xl.capitalize.my-8 Etimad Projects
-          .grid.grid-cols-2.gap-3
-            InputText.mt-4(label="Abbreviation"  placeholder="Enter Abbreviation" name="abbreviation" :value="project?.etimadProject?.abbreviation" )
-            InputText.mt-4(label="Organization Name"  placeholder="Enter Organization Name" name="organizationName" :value="project?.etimadProject?.organizationName" )
-            InputText.mt-4(label="RFP Name"  placeholder="Enter RFP Name" name="rfpName" :value="project?.etimadProject?.rfpName" )
-            InputSelect.mt-4(label=" Contract Type"  name="contractType" :options="contractTypes" :value="project?.etimadProject?.contractType" )
-            InputText.mt-4(label="Tender Price"  placeholder="Enter Tender Price" name="tenderPrice" :value="project?.etimadProject?.tenderPrice" )
-            InputText.mt-4(label="Business Line"  placeholder="Enter Business Line" name="businessLine" :value="project?.etimadProject?.businessLine" )
-            InputText.mt-4(label="Estimated Budget"  placeholder="Enter Estimated Budget" name="estimatedBudget" :value="project?.etimadProject?.estimatedBudget" )
-            InputText.mt-4(label="Company Margin"  placeholder="Enter Company Margin %" name="companyMargin" :value="project?.etimadProject?.companyMargin" )
-            InputDate.mt-4(label=" Submission Date"  placeholder="Enter Submission Date" disabledDate="past" :value="project?.etimadProject?.submissionDate" name="submissionDate" )
-            InputText.mt-4(label="Remaining Days" type="number" disabled name="remainingDays" :value="remainingDays" :key="remainingDays" )
-            InputSelect.mt-4(label=" Proposal Status" name="proposalStatus" :options="proposalStatuses" :value="project?.etimadProject?.proposalStatus" )
-            InputSelect.mt-4(label=" Application Status" name="applicationStatus" :options="applicationStatuses" :value="project?.etimadProject?.applicationStatus" )
-      .endBar
-        .flex.justify-between.w-full
-          el-button(size='large' plain type="primary" class=" !rounded-2xl" @click="emit('cancel')") Cancel
-          el-button(size='large' type="primary" native-type="submit" :loading="loading" :disabled="loading" class=" !px-5 !rounded-2xl") Next
+el-form.mb-24(autocomplete="off" @submit.prevent="onSubmit" ref="myForm" label-position="top" :key="project")
+  slot
+  .card.m-auto.bg-white.p-10.rounded-3xl(class="w-[90%] ")
+    .grid.grid-cols-2.gap-3
+      InputText.mt-4(label="Project Name" placeholder="Enter Project Name" name="name" :value="project?.name")
+      InputText.mt-4(label=" Project Type" placeholder="Enter Project Type" name="type" :value="project?.type")
+      InputSelect.mt-4(label=" Category" name="category" :options="projectCategories" :value="project?.category" @change="checkIfEtimadProject")
+      InputSelect.mt-4(label=" Client" name="client" :options="mappedClients" :value="mappedClients?.find((client: any) => client.value === project?.clientId)?.value")
+      InputDate(label=" Start Date" placeholder="Enter Start Date" :value="project?.startDate" name="startDate")
+      InputDate(label="End Date" placeholder="Enter End Date" :value="project?.endDate" name="endDate")
+      InputText.mt-4(label=" Project Duration" placeholder="Enter Project Duration" name="duration" :value="project?.duration")
+      InputSelect.mt-4(label=" Assign User" isMultiple name="assignUser" :options="users" :value="users?.filter((user: any) => project?.assignedUsers?.map((user: any) => user.id)?.includes(user.value))?.map((user: any) => user.value)")
+    InputSelect.mt-4(label=" Status " name="status" :options="projectStatuses" :value="project?.status" @change="checkIfCancelled")
+    InputText.mt-4(label="Cancel Reason" type="textarea" v-if="isCancelled" placeholder="Enter Cancel Reason" name="cancelReason" :value="project?.cancelledReason")
+    InputText.mt-4(label="Project Description" type="textarea" placeholder="Enter Project Description" name="description" :value="project?.description")
+    template(v-if="isEtimadProject")
+      .title.font-bold.text-xl.capitalize.my-8 Etimad Projects
+      .grid.grid-cols-2.gap-3
+        InputText.mt-4(label="Abbreviation" placeholder="Enter Abbreviation" name="abbreviation" :value="project?.etimadProject?.abbreviation")
+        InputText.mt-4(label="Organization Name" placeholder="Enter Organization Name" name="organizationName" :value="project?.etimadProject?.organizationName")
+        InputText.mt-4(label="RFP Name" placeholder="Enter RFP Name" name="rfpName" :value="project?.etimadProject?.rfpName")
+        InputSelect.mt-4(label=" Contract Type" name="contractType" :options="contractTypes" :value="project?.etimadProject?.contractType")
+        InputText.mt-4(label="Tender Price" placeholder="Enter Tender Price" name="tenderPrice" :value="project?.etimadProject?.tenderPrice")
+        InputText.mt-4(label="Business Line" placeholder="Enter Business Line" name="businessLine" :value="project?.etimadProject?.businessLine")
+        InputText.mt-4(label="Estimated Budget" placeholder="Enter Estimated Budget" name="estimatedBudget" :value="project?.etimadProject?.estimatedBudget")
+        InputText.mt-4(label="Company Margin" placeholder="Enter Company Margin %" name="companyMargin" :value="project?.etimadProject?.companyMargin")
+        InputDate.mt-4(label=" Submission Date" placeholder="Enter Submission Date" disabledDate="past" :value="project?.etimadProject?.submissionDate" name="submissionDate")
+        InputText.mt-4(label="Remaining Days" type="number" disabled name="remainingDays" :value="remainingDays" :key="remainingDays")
+        InputSelect.mt-4(label=" Proposal Status" name="proposalStatus" :options="proposalStatuses" :value="project?.etimadProject?.proposalStatus")
+        InputSelect.mt-4(label=" Application Status" name="applicationStatus" :options="applicationStatuses" :value="project?.etimadProject?.applicationStatus")
+  .endBar
+    .flex.justify-between.w-full
+      el-button(size='large' plain type="primary" class=" !rounded-2xl" @click="emit('cancel')") Cancel
+      el-button(size='large' type="primary" native-type="submit" :loading="loading" :disabled="loading" class=" !px-5 !rounded-2xl") Next
 </template>
 
 <script lang="ts" setup>

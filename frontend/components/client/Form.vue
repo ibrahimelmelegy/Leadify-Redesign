@@ -1,27 +1,25 @@
 <template lang="pug">
-ClientOnly
-  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
-    el-form.mb-24(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
-      slot
-      .card.m-auto.bg-white.rounded-3xl(class="2xl:w-1/2 w-[90%] " :class="!withoutPading ? 'p-10' : 'p-[0px]'")
-        .flex.align-center.justify-between
-          span
-          el-switch.my-4(v-if="!editMode && mappedLeads?.length" v-model="switchValue", size="large" inline-prompt, style="--el-switch-on-color: #7849FF; --el-switch-off-color: #918E98", active-text="Existing Lead", inactive-text="New Client")
-        .grid.grid-cols-2.gap-3
-          component.mt-3(:is="isLeads" :label="` ${switchValue && !editMode && mappedLeads?.length ? 'Lead' : 'Client'} Name`"  name="clientName" :options="mappedLeads" is-form :value="selectedLead?.name || data?.clientName" @change="getSelectedLead" )
-          InputText.mt-3(label="Company Name"  name="companyName" :value="selectedLead?.companyName  || data?.companyName" is-form)
-          InputText.mt-3(label="Email"  name="email" :value="selectedLead?.email || data?.email" @value="val=> isEmail = !!val" is-form)
-          InputPhone.mt-3(label=" Phone Number"  name="phone" :value="selectedLead?.phone || data?.phoneNumber" @value="val=> isPhone = !!val" @validphone="val=> validPhone = val" mode="international")
-          InputSelect.mt-3(label=" Client Type" name="clientType" :options="clientTypes" :value="data?.clientType")
-          InputSelect.mt-3(label=" Assign User" name="users" isMultiple :options="users" :value="users?.filter((user: any) => data?.users?.map((user: any) => user.id)?.includes(user.value))?.map((user: any) => user.value)" )
-        .grid.grid-cols-2.gap-3
-          InputText(label=" City" name="city"  placeholder="Enter City"  :value="data?.city" )
-          InputText(label=" Street Address" name="streetAddress"  placeholder="Enter Street Address"  :value="data?.streetAddress" )
-          InputText.mt-3(label=" State" name="state"  placeholder="Enter State"  :value="data?.state" )
-          InputText.mt-3(label=" zip code" name="zipCode"  placeholder="Enter zip code"  :value="data?.zipCode" )
-          InputSelect.mt-3(label=" Industry" name="industry" :options="clientIndustries" :value="data?.industry" )
-          InputSelect.mt-3(label=" Client Status" name="clientStatus" :options="clientStatuses" :value="data?.clientStatus" )
-        InputUploadFiles.mt-3(label="Upload File *" name="file" :value="data?.fileUpload?.map((file: any) => ({name: file, response: file, uid: uuidv4() }))" multiple)
+el-form.mb-24(autocomplete="off" @submit.prevent="onSubmit" ref="myForm" label-position="top")
+  slot
+  .card.m-auto.bg-white.rounded-3xl(class="2xl:w-1/2 w-[90%] " :class="!withoutPading ? 'p-10' : 'p-[0px]'")
+    .flex.align-center.justify-between
+      span
+      el-switch.my-4(v-if="!editMode && mappedLeads?.length" v-model="switchValue", size="large" inline-prompt, style="--el-switch-on-color: #7849FF; --el-switch-off-color: #918E98", active-text="Existing Lead", inactive-text="New Client")
+    .grid.grid-cols-2.gap-3
+      component.mt-3(:is="isLeads" :label="` ${switchValue && !editMode && mappedLeads?.length ? 'Lead' : 'Client'} Name`" name="clientName" :options="mappedLeads" is-form :value="selectedLead?.name || data?.clientName" @change="getSelectedLead")
+      InputText.mt-3(label="Company Name" name="companyName" :value="selectedLead?.companyName || data?.companyName" is-form)
+      InputText.mt-3(label="Email" name="email" :value="selectedLead?.email || data?.email" @value="val=> isEmail = !!val" is-form)
+      InputPhone.mt-3(label=" Phone Number" name="phone" :value="selectedLead?.phone || data?.phoneNumber" @value="val=> isPhone = !!val" @validphone="val=> validPhone = val" mode="international")
+      InputSelect.mt-3(label=" Client Type" name="clientType" :options="clientTypes" :value="data?.clientType")
+      InputSelect.mt-3(label=" Assign User" name="users" isMultiple :options="users" :value="users?.filter((user: any) => data?.users?.map((user: any) => user.id)?.includes(user.value))?.map((user: any) => user.value)")
+    .grid.grid-cols-2.gap-3
+      InputText(label=" City" name="city" placeholder="Enter City" :value="data?.city")
+      InputText(label=" Street Address" name="streetAddress" placeholder="Enter Street Address" :value="data?.streetAddress")
+      InputText.mt-3(label=" State" name="state" placeholder="Enter State" :value="data?.state")
+      InputText.mt-3(label=" zip code" name="zipCode" placeholder="Enter zip code" :value="data?.zipCode")
+      InputSelect.mt-3(label=" Industry" name="industry" :options="clientIndustries" :value="data?.industry")
+      InputSelect.mt-3(label=" Client Status" name="clientStatus" :options="clientStatuses" :value="data?.clientStatus")
+    InputUploadFiles.mt-3(label="Upload File *" name="file" :value="data?.fileUpload?.map((file: any) => ({name: file, response: file, uid: uuidv4() }))" multiple)
 </template>
 
 <script lang="ts" setup>

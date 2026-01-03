@@ -1,19 +1,17 @@
 <template lang="pug">
-ClientOnly
-  VForm(v-slot="{ handleSubmit: formHandleSubmit }" :validation-schema="formSchema" @submit="onSubmit")
-    el-form.border-t.pt-4(autocomplete="off" @submit.prevent="formHandleSubmit(onSubmit)" ref="myForm" label-position="top")
-      .flex.align-center.gap-1
-        InputSelect(class="w-11/12" label=" Manpower Name" name="manpowerId" :options="manpowerOptions" :value=" isNew ? manpowerOptions[0]?.value : data?.manpowerId" )
-        el-button.mt-7.flex-1(size='medium' :icon="Plus" native-type="button" @click="addNewManPower = true" class="!rounded-2xl !border-[#e9e8eb] !py-7 !px-4")
-      .grid.grid-cols-2.gap-3.items-center
-        InputText(label="Estimate Work Day" placeholder="Enter Estimate Work Day" name="estimatedWorkDays" :value="data?.estimatedWorkDays" )
-        InputSelect.mt-6(label=" Mission" isMultiple name="mission" :options="projectMissions" :value="data?.mission" )
-        InputText.mt-4(v-if="data?.id" label="Actual Worked Days" placeholder="Enter Actual Worked Days" name="actualWorkDays" :value="data?.actualWorkDays" )
-        el-checkbox(label="Other Costs ?" v-model="isOtherCost")
-      template(v-if="isOtherCost")
-        InputText.mt-4(label="Other Costs" placeholder="Enter Other Costs SAR" name="otherCosts" :value="data?.otherCosts" )
-        InputText.mt-4(label="Other Cost Reason" type="textarea" placeholder="Enter Total Cost SAR" name="otherCostsReason" :value="data?.otherCostsReason" )
-      slot(name="modal-footer")
+el-form.border-t.pt-4(autocomplete="off" @submit.prevent="onSubmit" ref="myForm" label-position="top")
+  .flex.align-center.gap-1
+    InputSelect(class="w-11/12" label=" Manpower Name" name="manpowerId" :options="manpowerOptions" :value="isNew ? manpowerOptions[0]?.value : data?.manpowerId")
+    el-button.mt-7.flex-1(size='medium' :icon="Plus" native-type="button" @click="addNewManPower = true" class="!rounded-2xl !border-[#e9e8eb] !py-7 !px-4")
+  .grid.grid-cols-2.gap-3.items-center
+    InputText(label="Estimate Work Day" placeholder="Enter Estimate Work Day" name="estimatedWorkDays" :value="data?.estimatedWorkDays")
+    InputSelect.mt-6(label=" Mission" isMultiple name="mission" :options="projectMissions" :value="data?.mission")
+    InputText.mt-4(v-if="data?.id" label="Actual Worked Days" placeholder="Enter Actual Worked Days" name="actualWorkDays" :value="data?.actualWorkDays")
+    el-checkbox(label="Other Costs ?" v-model="isOtherCost")
+  template(v-if="isOtherCost")
+    InputText.mt-4(label="Other Costs" placeholder="Enter Other Costs SAR" name="otherCosts" :value="data?.otherCosts")
+    InputText.mt-4(label="Other Cost Reason" type="textarea" placeholder="Enter Total Cost SAR" name="otherCostsReason" :value="data?.otherCostsReason")
+  slot(name="modal-footer")
 </template>
 
 <script setup lang="ts">
