@@ -83,7 +83,9 @@
         type: "success",
         message: response.message,
       });
-      router.push("/");
+      // Use full page reload to ensure cookie is properly sent
+      await nextTick();
+      window.location.href = "/";
     } else {
       ElNotification({
         title: "Error",
