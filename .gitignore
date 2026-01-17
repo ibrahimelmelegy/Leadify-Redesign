@@ -1,0 +1,13 @@
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+.env
+backend/.env
+frontend/.env
+*.log
+.nuxt/
+dist/
+.output/
+.config/
+Leadify_Improvements_Report.pdf
+attached_assets/leadify-full-fixed_1767047074153.zip

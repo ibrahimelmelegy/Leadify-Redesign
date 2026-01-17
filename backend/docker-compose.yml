@@ -1,7 +1,7 @@
 version: '3'
 services:
   db:
-    image: postgres
+    image: postgres:15
     env_file:
       - .env # Use the same .env file for both services
     environment:
