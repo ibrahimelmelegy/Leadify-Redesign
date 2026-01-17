@@ -1,4 +1,4 @@
-@use '@/assets/styles/variables.scss' as *;
+@use '@/assets/styles/_tokens.scss' as *;
 
 .el-table th.el-table__cell.is-leaf {
   --el-table-border: 2px solid var(--el-table-border-color) !important;

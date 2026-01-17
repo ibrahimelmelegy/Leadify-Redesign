@@ -1,37 +1,38 @@
-@use "./input.scss" ;
-@use "./menu.scss" ;
-@use "./popper.scss" ;
-@use "./pagintation.scss" ;
-@use "./tag.scss" ;
-@use "./tab.scss" ;
-@use "./table.scss" ;
-@use "./button.scss" ;
-@use "./dialog.scss" ;
-@use "./collapse.scss" ;
+@use '@/assets/styles/_tokens.scss' as *;
+@use "./input.scss";
+@use "./menu.scss";
+@use "./popper.scss";
+@use "./pagintation.scss";
+@use "./tag.scss";
+@use "./tab.scss";
+@use "./table.scss";
+@use "./button.scss";
+@use "./dialog.scss";
+@use "./collapse.scss";
 @use '@/assets/styles/variables.scss' as *;
 
 
 
 :root {
---el-menu-base-level-padding : 30px !important;
---el-color-primary : #{$primary} !important;
---el-menu-hover-bg-color : #{$primary-light} !important ;
---el-input-border-radius: #{$raduis-base} !important;
---el-upload-size : 160px !important ;
---el-border-radius-round : #{$raduis-base} !important;
---el-border-radius-base : #{$raduis-base} !important;
---el-color-primary-light-3 : #{$primary-light-hover} !important;
---el-color-primary-dark-2 : #{$primary} !important;
---el-border-color : #{$border} !important;
---el-text-color-secondary:  : #4B4B4B !important;
+    --el-menu-base-level-padding: 30px !important;
+    --el-color-primary : #{$primary} !important;
+    --el-menu-hover-bg-color : #{$primary-light} !important;
+    --el-input-border-radius: #{$raduis-base} !important;
+    --el-upload-size: 160px !important;
+    --el-border-radius-round : #{$raduis-base} !important;
+    --el-border-radius-base : #{$raduis-base} !important;
+    --el-color-primary-light-3 : #{$primary-light-hover} !important;
+    --el-color-primary-dark-2 : #{$primary} !important;
+    --el-border-color : #{$border} !important;
+    --el-text-color-secondary: : #4B4B4B !important;
 
 }
 
-.is-hovering{
+.is-hovering {
     color: $primary !important;
 }
 
-.is-error{
+.is-error {
     --el-border-color : #{$error} !important;
 }
 

@@ -1,7 +1,8 @@
-@use '@/assets/styles/variables.scss' as *;
+@use '@/assets/styles/_tokens.scss' as *;
 
 .el-dialog {
   padding: 40px !important;
+
   .el-dialog__header {
     padding-left: 0px !important;
     padding-right: 0px !important;

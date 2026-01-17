@@ -1,0 +1,17 @@
+Welcome back 👋
+Login to your account
+[0] (68,432)<label class='el-form-item__label' id='el-id-2986-0'>Email />
+	Email
+[1] (284,466)<div class='el-input__wrapper' />
+	[2] (284,466)<input class='el-input__inner' id='el-id-2986-3' placeholder='Email' />
+[3] (73,495)<label class='el-form-item__label' id='el-id-2986-1'>Password />
+	Password
+[4] (284,529)<div class='el-input__wrapper' />
+	[5] (284,529)<input class='el-input__inner' id='el-id-2986-4' placeholder='Password' />
+[6] (82,572)<label class='el-checkbox !text-neutral-900 font-normal' />
+	[7] (64,572)<span  />
+		[8] (64,572)<span  />
+	[9] (84,572)<span >Remember me />
+[10] (486,572)<a class='text-secondary-blue-500 text-sm font-medium' href='/forget-password'>Forgot password? />
+[11] (284,627)<button class='el-button el-button--primary el-button--large w-full !my-4 !rounded-xl' />
+	[12] (284,627)<span >Login />

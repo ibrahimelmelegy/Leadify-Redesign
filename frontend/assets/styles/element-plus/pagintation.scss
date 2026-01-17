@@ -1,9 +1,10 @@
-@use '@/assets/styles/variables.scss' as *;
+@use '@/assets/styles/_tokens.scss' as *;
 
 .el-pagination {
   --el-pagination-border-radius: 0.5rem !important;
   --el-pagination-button-width: 32px !important;
   --el-pagination-button-height: 32px !important;
+
   .number:not(.is-active),
   .btn-prev,
   .btn-next {

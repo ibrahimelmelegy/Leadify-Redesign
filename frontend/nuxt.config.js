@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      API_BASE_URL: process.env.API_BASE_URL || '',
+      API_BASE_URL: process.env.API_BASE_URL || '/api/',
       BASE_URL: process.env.BASE_URL || 'http://localhost:3000/',
       BUCKET_URL: process.env.BUCKET_URL || 'http://localhost:3000/',
     },
@@ -46,12 +46,12 @@ export default defineNuxtConfig({
   vite: {
     server: {
       allowedHosts: true,
-      hmr: false,
+      // hmr: false, // Re-enabling HMR might help if the issue was polling related
     },
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "@/assets/styles/variables.scss" as *;`,
+          additionalData: `@use "@/assets/styles/_tokens.scss" as *;`,
         },
       },
     },
@@ -69,12 +69,7 @@ export default defineNuxtConfig({
   // },
 
   compatibilityDate: '2024-11-16',
-  nitro: {
-    devProxy: {
-      '/api': {
-        target: 'http://localhost:3000/api',
-        changeOrigin: true,
-      },
-    },
+  routeRules: {
+    '/api/**': { proxy: 'http://localhost:3000/api/**' },
   },
 });
