@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['@/assets/styles/global.scss', '@/assets/css/dark-mode.css'],
+  css: ['@/assets/styles/global.scss', 'element-plus/theme-chalk/dark/css-vars.css', '@/assets/css/premium-dark.css'],
 
   modules: ['@element-plus/nuxt', 'nuxt-icon', '@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxt/image', 'nuxt-tiptap-editor'],
   tiptap: {

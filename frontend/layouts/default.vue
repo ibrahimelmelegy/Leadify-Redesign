@@ -38,9 +38,13 @@
                 div.border.rounded-xl(v-if="response?.value?.unreadNotificationsCount > 0" class="h-[10px] w-[10px] bg-[red]" style="margin-left:-5px ; margin-top:-30px")
           .mt-4
         .slot-content(class="!mt-24" :class="{'!pl-[32px] !pr-[50px]' : !mobile, '!px-[20px] '  : mobile}")
+
+            SpotlightSearch
             slot
   </template>
 <script setup lang="ts">
+
+import SpotlightSearch from '~/components/global/SpotlightSearch.vue';
 import { useWindowSize } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { useMain } from "~/stores/common";
@@ -132,12 +136,18 @@ watch(width, () => {
   checkwidth();
 });
 
-const user = ref({});
+const user = ref<any>({});
 
-if (!user.value?.id) {
-  const response = await useApiFetch("auth/me");
-  user.value = response?.user;
-}
+onMounted(async () => {
+    if (!user.value?.id) {
+        try {
+            const response = await useApiFetch("auth/me");
+            user.value = response?.user;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+});
 
 const breadcrumbRoutes = computed(() => {
   const pathSegments = route.path.split("/").filter(Boolean);

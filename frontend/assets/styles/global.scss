@@ -341,7 +341,8 @@ ul {
 }
 
 body {
-  background: #f8f7fa !important;
+  background: var(--bg-secondary) !important;
+  transition: background-color 0.3s ease;
 }
 
 .el-breadcrumb__inner a,

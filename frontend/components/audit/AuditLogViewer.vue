@@ -47,7 +47,7 @@
     el-table-column(prop="entityId" label="Entity ID" width="100")
     el-table-column(label="User" width="150")
       template(#default="{ row }")
-        | User #{{ row.userId }}
+        span {{ `User #${row.userId}` }}
     el-table-column(prop="ipAddress" label="IP Address" width="140")
     el-table-column(label="Details")
       template(#default="{ row }")

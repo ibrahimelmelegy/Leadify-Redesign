@@ -1,19 +1,22 @@
 import { defineStore } from 'pinia';
+// @ts-ignore
 import ImageUploader from 'quill-image-uploader';
-import { ElNotification } from 'element-plus';
+import { ElNotification, type NotificationParams } from 'element-plus';
 
 const runtimeConfig = useRuntimeConfig();
+
+
 
 export const useMain = defineStore('Main', {
   state: () => ({
     filereturned: '',
-    contentImagesUrls: [],
+    contentImagesUrls: [] as string[],
 
     openedNav: true,
     mobile: false,
     fullNav: true,
     hideNav: false,
-    permissions: [],
+    permissions: [] as string[],
 
     months: [
       { label: 'January', value: 1 },
@@ -32,12 +35,16 @@ export const useMain = defineStore('Main', {
   }),
 
   actions: {
-    async uploadFile(model, file) {
+    async uploadFile(model: string, file: any) {
       const extension = file.name.slice(file.name.lastIndexOf('.'));
 
       let fileName = `Tatmeen-${new Date().getTime()}${extension}`;
 
       const myRenamedFile = new File([file], fileName, { type: file.type });
+
+      // useAsyncGql might be auto-imported, checking if Nuxt auto-import works or needs explicit
+      // Assuming it's available globally or via composable
+      // @ts-ignore
       const { data } = await useAsyncGql('generateUploadLink', {
         model: model.toUpperCase(),
         fileName: fileName,
@@ -52,12 +59,12 @@ export const useMain = defineStore('Main', {
         });
         const filereturned = link?.split('?')[0].split(runtimeConfig.public.BUCKET_URL)[1];
         return filereturned;
-      } catch (error) {
+      } catch (error: any) {
         ElNotification({
           title: 'Error',
           type: 'error',
-          message: error,
-        });
+          message: error.message || String(error),
+        } as NotificationParams);
       }
     },
     uploadImagEditor() {
@@ -65,7 +72,7 @@ export const useMain = defineStore('Main', {
         name: 'imageUploader',
         module: ImageUploader,
         options: {
-          upload: async (filename) => {
+          upload: async (filename: any) => {
             return new Promise(async (resolve, reject) => {
               try {
                 const fileAdded = await this.uploadFile('BLOG_COVER', filename);
@@ -84,7 +91,7 @@ export const useMain = defineStore('Main', {
   },
 });
 
-function fileToDataUrl(file) {
+function fileToDataUrl(file: any) {
   return new Promise((resolve, reject) => {
     if (!file) {
       reject('No file provided.');

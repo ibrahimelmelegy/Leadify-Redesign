@@ -22,7 +22,9 @@
               el-menu-item(:index="subLink.link" @click="mobileNavigate(subLink.link)" :class="{'is-active': route.fullPath.includes(subLink.link) && subLink.link == '/'}") {{subLink.name}}
             el-menu-item(:index="`${index+1}-${subIndex+1}`" :class="{'disabled-link' : getDisabled(subLink.role)}" v-else-if="getDisabled(subLink.role) && subLink.link !== '/operations/daily-task'") {{subLink.name}}
             NuxtLink(:to="subLink.link" v-else-if="subLink.link !== '/operations/daily-task'")
-              el-menu-item(:index="subLink.link" @click="mobileNavigate(subLink.link)" :class="{'is-active': route.fullPath.includes(subLink.link) && subLink.link !== '/'}") {{subLink.name}}
+              el-menu-item(:index="subLink.link" @click="mobileNavigate(subLink.link)" :class="{'is-active': route.fullPath.includes(subLink.link) && subLink.link !== '/'}")
+                Icon.myicon.mr-2(size="18" :name="subLink.icon || 'ri:checkbox-blank-circle-line'")
+                span {{subLink.name}}
         template(v-else)
           el-menu-item(:index='`${index+1}`' :class="{'disabled-link': getDisabled(navLink.role)}" v-if="navLink.link !== '/' && getDisabled(navLink.role)")
             el-icon
@@ -63,9 +65,9 @@ function mobileNavigate(link: string) {
   }
 }
 
-function getDisabled(role) {
-  if (permissions.value.length) {
-    return !permissions.value?.includes(role);
+function getDisabled(role: string): boolean {
+  if (permissions.value && permissions.value.length) {
+    return !permissions.value.includes(role);
   } else {
     return false;
   }
@@ -84,22 +86,27 @@ const menu = [
       {
         link: "/sales/leads",
         name: "Leads",
+        icon: "ri:user-star-line",
       },
       {
         link: "/sales/clients",
         name: "Clients",
+        icon: "ri:user-follow-line",
       },
       {
         link: "/sales/opportunity",
         name: "Opportunity",
+        icon: "ri:lightbulb-line",
       },
       {
         link: "/sales/deals",
         name: "Deals",
+        icon: "ri:shake-hands-line",
       },
       {
         link: "/sales/proposals",
         name: "Proposals",
+        icon: "ri:file-list-3-line",
       },
     ],
     name: "Sales",
@@ -111,30 +118,37 @@ const menu = [
       {
         link: "/operations/projects",
         name: "Projects",
+        icon: "ri:building-2-line",
       },
       {
         link: "/operations/daily-task",
         name: "Daily Tasks",
+        icon: "ri:task-line",
       },
       {
         link: "/operations/vehicle",
         name: "Vehicle",
+        icon: "ri:steering-2-line",
       },
       {
         link: "/operations/manpower",
         name: "Manpower",
+        icon: "ri:group-line",
       },
       {
         link: "/operations/additional-material",
         name: "Additional Materials",
+        icon: "ri:stack-line",
       },
       {
         link: "/operations/services",
         name: "Services",
+        icon: "ri:service-line",
       },
       {
         link: "/operations/assets",
         name: "Assets",
+        icon: "ri:archive-line",
       },
     ],
     name: "Operations",
@@ -152,6 +166,7 @@ const menu = [
     name: "Staff",
     icon: "IconStaff",
     link: "/staff",
+    submenu: false,
     isOpen: false, // Open this submenu
   },
   {
@@ -160,6 +175,28 @@ const menu = [
     icon: "IconReport",
     submenu: false,
     isOpen: false, // New property
+  },
+  {
+    submenu: [
+      {
+        link: "/settings/security",
+        name: "Security",
+        icon: "ri:shield-key-line",
+      },
+      {
+        link: "/audit-logs",
+        name: "Audit Logs",
+        icon: "ri:file-history-line",
+      },
+      {
+        link: "/settings/webhooks",
+        name: "Webhooks",
+        icon: "ri:webhook-line",
+      },
+    ],
+    name: "System",
+    icon: "IconSetting",
+    isOpen: false,
   },
 ];
 

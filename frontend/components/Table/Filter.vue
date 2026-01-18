@@ -1,5 +1,5 @@
 <template lang="pug">
-el-drawer(v-model="drawer", direction="rtl", :show-close="false" destroy-on-close	)
+el-drawer(v-model="drawer", direction="rtl", :show-close="false" destroy-on-close :append-to-body="true")
   template(#header="{ close, titleId, titleClass }")
     h4(:id="titleId", class="text-xl text-neutral-700 font-semibold") Filter
     button(@click="close", class="ml-auto flex items-center text-neutral-700")
@@ -25,7 +25,7 @@ el-drawer(v-model="drawer", direction="rtl", :show-close="false" destroy-on-clos
 </template>
 
 <script lang="ts" setup>
-  import { ref, computed, defineModel, defineProps, defineEmits } from "vue";
+  import { ref, computed } from "vue";
   const route = useRoute();
   const query = { ...route.query };
   const router = useRouter();

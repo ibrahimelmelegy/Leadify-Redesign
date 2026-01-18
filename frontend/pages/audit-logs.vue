@@ -9,8 +9,7 @@
 import AuditLogViewer from '~/components/audit/AuditLogViewer.vue';
 
 definePageMeta({
-  layout: 'default',
-  middleware: 'auth'
+  layout: 'default'
 });
 </script>
 

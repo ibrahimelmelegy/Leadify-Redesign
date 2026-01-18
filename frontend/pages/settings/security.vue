@@ -36,8 +36,7 @@ import SessionManagement from '~/components/security/SessionManagement.vue';
 import { useApiFetch } from '~/composables/useApiFetch';
 
 definePageMeta({
-  layout: 'default',
-  middleware: 'auth'
+  layout: 'default'
 });
 
 const activeTab = ref('2fa');
@@ -107,12 +106,9 @@ async function changePassword() {
     await passwordFormRef.value?.validate();
     loading.value = true;
     
-    await useApiFetch('auth/change-password', {
-      method: 'POST',
-      body: {
-        currentPassword: passwordForm.value.currentPassword,
-        newPassword: passwordForm.value.newPassword
-      }
+    await useApiFetch('auth/change-password', 'POST', {
+      currentPassword: passwordForm.value.currentPassword,
+      newPassword: passwordForm.value.newPassword
     });
     
     ElMessage.success('Password changed successfully');

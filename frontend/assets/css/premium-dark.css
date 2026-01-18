@@ -1,0 +1,470 @@
+/* Premium Gradient Dark Mode */
+
+html.dark body {
+    /* Deep Rich Gradient Background: Slate 900 to Indigo 950 */
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%) !important;
+    background-attachment: fixed !important;
+    /* Covers whole page */
+    min-height: 100vh;
+    color: #e2e8f0 !important;
+    /* Slate 200 Text */
+}
+
+html.dark {
+    /* Override Element Plus Base Colors with Transparent/Deep shades */
+    --el-bg-color: rgba(30, 41, 59, 0.4);
+    /* Glass Slate 800 */
+    --el-bg-color-page: transparent;
+    /* Let gradient show through */
+    --el-bg-color-overlay: #1e293b;
+    /* Solid for dropdowns */
+    --el-text-color-primary: #f8fafc;
+    /* Slate 50 */
+    --el-text-color-regular: #cbd5e1;
+    /* Slate 300 */
+    --el-text-color-secondary: #94a3b8;
+    /* Slate 400 */
+    --el-border-color: rgba(255, 255, 255, 0.08);
+    /* Subtle White Border */
+    --el-border-color-light: rgba(255, 255, 255, 0.05);
+    --el-fill-color-blank: rgba(15, 23, 42, 0.5);
+    /* Inputs background */
+}
+
+/* Glassmorphism for Cards */
+html.dark .el-card {
+    background: rgba(30, 41, 59, 0.4) !important;
+    /* Semi-transparent */
+    backdrop-filter: blur(12px) !important;
+    /* Blur effect */
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    color: #f1f5f9;
+}
+
+/* =========================================
+   World-Class Sidebar (Clean & Professional)
+   ========================================= */
+html.dark .sidebar,
+html.dark .el-menu {
+    background: #0b1121 !important;
+    /* Deepest Navy/Black - Solid & Professional */
+    backdrop-filter: none !important;
+    /* Remove blur to clean up visual noise */
+    border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Menu Items - Clean Pills */
+html.dark .el-menu-item,
+html.dark .el-sub-menu__title {
+    color: #94a3b8 !important;
+    /* Slate 400 */
+    margin: 4px 12px !important;
+    border-radius: 8px !important;
+    /* Standard consistent radius */
+    border: none !important;
+    transition: all 0.2s ease;
+}
+
+/* Hover Effect - Subtle */
+html.dark .el-menu-item:hover,
+html.dark .el-sub-menu__title:hover {
+    background: rgba(255, 255, 255, 0.04) !important;
+    color: #f8fafc !important;
+    transform: none !important;
+    /* Remove movement */
+    box-shadow: none !important;
+}
+
+/* Active State - Professional Accent */
+html.dark .el-menu-item.is-active {
+    background: rgba(99, 102, 241, 0.1) !important;
+    /* Subtle Indigo Tint */
+    color: #818cf8 !important;
+    /* Indigo 400 */
+    border-left: none !important;
+    /* Remove border line, use background fill */
+    box-shadow: none !important;
+    font-weight: 500;
+}
+
+/* Submenu Background - Uniform */
+html.dark .el-menu--inline {
+    background: transparent !important;
+    /* No different shade for submenus */
+}
+
+/* Icons - Strict Uniformity */
+/* Icons - Strict Uniformity & Polish */
+html.dark .myicon {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    /* Subtle glass background */
+    color: #818cf8 !important;
+    /* Indigo 400 - Professional Accent */
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05);
+    /* Subtle Border */
+    padding: 6px !important;
+    /* Consistent padding */
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    /* Smooth Squircle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+html.dark .myicon svg {
+    width: 18px;
+    height: 18px;
+}
+
+html.dark .el-menu-item:hover .myicon,
+html.dark .el-sub-menu__title:hover .myicon {
+    background-color: #818cf8 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(129, 140, 248, 0.4);
+}
+
+html.dark .el-menu-item.is-active .myicon {
+    background-color: #818cf8 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 15px rgba(129, 140, 248, 0.5);
+}
+
+/* Report Icon specific fix (and any others) */
+html.dark .myicon svg,
+html.dark .myicon path {
+    fill: currentColor !important;
+    stroke: currentColor !important;
+}
+
+
+/* =========================================
+   World-Class Header (Floating Glass) 
+   ========================================= */
+html.dark .navbar {
+    background: rgba(15, 23, 42, 0.7) !important;
+    backdrop-filter: blur(25px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+
+    /* Floating Effect (Optional - if layout permits)
+    margin: 16px 24px 0 24px;
+    width: calc(100% - 48px) !important;
+    border-radius: 16px;
+    top: 0;
+    */
+    z-index: 50 !important;
+}
+
+/* Floating Tools / Notifications Capsules */
+html.dark .tools,
+html.dark .notification {
+    background: rgba(30, 41, 59, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+html.dark .tools:hover,
+html.dark .notification:hover {
+    transform: translateY(-2px);
+    border-color: rgba(129, 140, 248, 0.5) !important;
+    /* Removed box-shadow glow as requested */
+}
+
+/* Fix Notification Icon Visibility */
+html.dark .notification .icon,
+html.dark .notification svg,
+html.dark .notification span {
+    color: #a78bfa !important;
+    /* Purple (Violet-400) */
+    /* Removed drop-shadow glow */
+}
+
+html.dark .notification .bg-\[red\] {
+    background-color: #ef4444 !important;
+    /* Keep Badge Red */
+    box-shadow: 0 0 5px #ef4444;
+    /* Glowing Red Badge */
+    border: 1px solid #0f172a;
+    /* Contrast border */
+}
+
+/* Breadcrumb Text */
+html.dark .el-breadcrumb__inner {
+    color: #94a3b8 !important;
+}
+
+html.dark .el-breadcrumb__item:last-child .el-breadcrumb__inner {
+    color: #f1f5f9 !important;
+    font-weight: 600;
+}
+
+/* Inputs & Form Elements */
+html.dark .el-input__wrapper,
+html.dark .el-textarea__inner,
+html.dark .el-select__wrapper {
+    background-color: rgba(15, 23, 42, 0.6) !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+}
+
+html.dark .el-input__wrapper.is-focus {
+    box-shadow: 0 0 0 1px #818cf8 inset !important;
+    /* Indigo 400 focus */
+}
+
+/* Tables */
+html.dark .el-table {
+    background-color: transparent !important;
+    color: #cbd5e1;
+    --el-table-tr-bg-color: transparent;
+    --el-table-header-bg-color: rgba(30, 41, 59, 0.4);
+    --el-table-row-hover-bg-color: rgba(255, 255, 255, 0.05);
+}
+
+html.dark .el-table th.el-table__cell {
+    background-color: rgba(30, 41, 59, 0.6) !important;
+}
+
+html.dark .el-table td.el-table__cell,
+html.dark .el-table th.el-table__cell.is-leaf {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Dialogs - Floating Modal */
+html.dark .el-dialog {
+    background: #1e293b !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px !important;
+}
+
+/* Drawer - Full Height Sidebar */
+/* Drawer - Full Height Sidebar */
+html.dark .el-drawer {
+    background: #0f172a !important;
+    /* Deep Navy to match sidebar */
+    border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+    height: 100vh !important;
+    /* Force Full Height */
+    top: 0 !important;
+    bottom: 0 !important;
+    margin: 0 !important;
+    border-radius: 24px 0 0 24px !important;
+    /* Rounded corners on Left side */
+    color: #f8fafc !important;
+    overflow: hidden !important;
+}
+
+html.dark .el-drawer__header {
+    color: #f8fafc !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 0 !important;
+    padding-bottom: 20px !important;
+}
+
+html.dark .el-drawer__title {
+    color: #f8fafc !important;
+    font-weight: 600;
+}
+
+html.dark .el-drawer__body {
+    color: #e2e8f0 !important;
+    padding: 20px !important;
+}
+
+/* Fix Filter Drawer Labels (Creation Date, etc.) */
+html.dark .el-collapse-item__header {
+    color: #f8fafc !important;
+    /* White text for accordion titles */
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Fix "from" / "to" labels in InputText */
+html.dark .input-text-label,
+html.dark .el-form-item__label,
+html.dark label {
+    color: #cbd5e1 !important;
+    /* Light Slate for field labels */
+}
+
+/* Fix Input Fields appearing dark/invisible */
+html.dark .el-input__inner {
+    color: #f8fafc !important;
+}
+
+html.dark .el-input__wrapper {
+    background-color: rgba(15, 23, 42, 0.6) !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+}
+
+/* Fix Date Picker Inner Inputs */
+html.dark .el-range-input {
+    color: #f8fafc !important;
+    background: transparent !important;
+}
+
+html.dark .el-date-editor .el-range-separator {
+    color: #94a3b8 !important;
+}
+
+/* Scrollbars */
+html.dark ::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 4px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Stats Cards (Specific overrides if they have custom classes) */
+html.dark .stats-card {
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.6), rgba(30, 41, 59, 0.3)) !important;
+}
+
+/* Force overrides for Tailwind white backgrounds */
+html.dark .bg-white,
+html.dark .bg-gray-50,
+html.dark .bg-gray-100 {
+    background-color: rgba(30, 41, 59, 0.4) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: #f1f5f9 !important;
+}
+
+/* Fix Labels */
+html.dark label,
+html.dark .el-form-item__label {
+    color: #e2e8f0 !important;
+    font-weight: 500;
+}
+
+/* Fix Headings */
+html.dark h1,
+html.dark h2,
+html.dark h3,
+html.dark h4,
+html.dark h5,
+html.dark h6 {
+    color: #f8fafc !important;
+}
+
+/* Fix Placeholders */
+html.dark ::placeholder {
+    color: #94a3b8 !important;
+    opacity: 1;
+}
+
+/* =========================================
+   Universal Text Visibility Fixes
+   ========================================= */
+/* Force invert all neutral/gray text classes in Dark Mode */
+html.dark .text-neutral-900,
+html.dark .text-neutral-800,
+html.dark .text-gray-900,
+html.dark .text-gray-800 {
+    color: #f8fafc !important;
+    /* White */
+}
+
+html.dark .text-neutral-500,
+html.dark .text-neutral-400,
+html.dark .text-gray-500,
+html.dark .text-gray-400,
+html.dark .text-neutral-600,
+/* Also include slightly darker grays */
+html.dark .text-gray-600 {
+    color: #ffffff !important;
+    /* Pure Bright White as requested */
+    opacity: 0.9;
+    /* Slight opacity to prevent harshness, but keeps it white */
+}
+
+/* Fix specific Element Plus text */
+html.dark .el-dropdown-menu__item:not(.is-disabled):focus {
+    background-color: rgba(129, 140, 248, 0.2);
+    color: #818cf8;
+}
+
+/* =========================================
+   Component Specific Fixes
+   ========================================= */
+
+/* Phone Input Fix (vue-tel-input) */
+html.dark .vue-tel-input {
+    background-color: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: none !important;
+}
+
+html.dark .vue-tel-input:focus-within {
+    border-color: #818cf8 !important;
+    /* Indigo 400 */
+    box-shadow: 0 0 0 1px #818cf8 !important;
+}
+
+html.dark .vti__dropdown {
+    background-color: rgba(30, 41, 59, 0.6) !important;
+    /* Darker for dropdown */
+    color: #f1f5f9 !important;
+}
+
+html.dark .vti__dropdown-list {
+    background-color: #1e293b !important;
+    /* Slate 800 */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #e2e8f0 !important;
+}
+
+html.dark .vti__dropdown-item.highlighted {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+html.dark input.vti__input {
+    background-color: transparent !important;
+    color: #f1f5f9 !important;
+}
+
+html.dark input.vti__input::placeholder {
+    color: #94a3b8 !important;
+}
+
+/* Lead Stage / Status Pills Fix */
+/* Targeting spans/divs that might be using dynamic background colors */
+
+/* Specific fix for the purple pills seen in the image (Discovery, Proposal...) */
+html.dark .bg-primary-purple-50,
+html.dark .bg-secondary-turquoise-50,
+html.dark .bg-semantic-error-background,
+html.dark .bg-semantic-warning-background,
+html.dark .bg-secondary-blue-100,
+html.dark .bg-secondary-turquoise-100,
+html.dark [class*="bg-purple"],
+html.dark [class*="bg-indigo"] {
+    color: #f8fafc !important;
+    /* Force White text on these specific backgrounds */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    /* Add shadow for readability */
+}
+
+/* Ensure dark text on light backgrounds is inverted? No, usually these are colored pills. 
+   The issue in the image was dark text on dark purple background. 
+   Forcing white text should solve it. */
+
+html.dark .label-outline-proposal,
+html.dark .label-outline-discovery,
+html.dark .label-outline-negotiation,
+html.dark .label-outline-won,
+html.dark .label-outline-lost,
+html.dark .label-outline-converted {
+    color: #f8fafc !important;
+}

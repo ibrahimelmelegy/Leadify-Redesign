@@ -4,41 +4,20 @@
     v-model="isDark"
     :active-icon="Moon"
     :inactive-icon="Sunny"
-    @change="toggleDarkMode"
   )
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { useDark, useToggle } from '@vueuse/core';
 import { Moon, Sunny } from '@element-plus/icons-vue';
 
-const isDark = ref(false);
-
-onMounted(() => {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
-    isDark.value = true;
-    document.documentElement.classList.add('dark');
-  } else if (savedTheme === 'light') {
-    isDark.value = false;
-    document.documentElement.classList.remove('dark');
-  } else {
-    isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if (isDark.value) {
-      document.documentElement.classList.add('dark');
-    }
-  }
+const isDark = useDark({
+  selector: 'html',
+  attribute: 'class',
+  valueDark: 'dark',
+  valueLight: '',
 });
-
-function toggleDarkMode(value: boolean) {
-  if (value) {
-    document.documentElement.classList.add('dark');
-    localStorage.setItem('theme', 'dark');
-  } else {
-    document.documentElement.classList.remove('dark');
-    localStorage.setItem('theme', 'light');
-  }
-}
+const toggleDark = useToggle(isDark);
 </script>
 
 <style scoped>
