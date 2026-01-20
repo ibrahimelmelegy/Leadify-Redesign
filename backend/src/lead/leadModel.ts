@@ -1,4 +1,4 @@
-import { AllowNull, BelongsTo, BelongsToMany, Column, DataType, Default, ForeignKey, Model, Table } from 'sequelize-typescript';
+import { AllowNull, BelongsTo, BelongsToMany, Column, DataType, Default, ForeignKey, Model, Table, Index } from 'sequelize-typescript';
 import User from '../user/userModel';
 import { LeadSourceEnums, LeadStatusEnums } from './leadEnum';
 import LeadUsers from './model/lead_UsersModel';
@@ -22,6 +22,7 @@ class Lead extends Model {
   @Column({ type: DataType.STRING, allowNull: true })
   public companyName?: string;
 
+  @Index
   @Column({
     type: DataType.STRING,
     allowNull: true
@@ -36,6 +37,7 @@ class Lead extends Model {
   public phone?: string;
 
   @Default(LeadSourceEnums.EMAIL)
+  @Index
   @Column({
     type: DataType.ENUM(...Object.values(LeadSourceEnums))
   })
@@ -57,6 +59,7 @@ class Lead extends Model {
   public notes?: string;
 
   @Default(LeadStatusEnums.NEW)
+  @Index
   @Column({
     type: DataType.ENUM(...Object.values(LeadStatusEnums))
   })

@@ -64,6 +64,35 @@ const sequelize = new Sequelize({
   host: DB_HOST,
   port: parseInt(DB_PORT, 10),
   dialect: 'postgres',
+  // Connection pooling configuration
+  pool: {
+    max: 10,          // Maximum connections in pool
+    min: 2,           // Minimum connections to maintain
+    acquire: 30000,   // Max time (ms) to wait for connection
+    idle: 10000,      // Max time (ms) connection can be idle
+    evict: 5000       // Time interval to check for idle connections
+  },
+  // Retry logic for connection failures
+  retry: {
+    max: 3,
+    match: [
+      /SequelizeConnectionError/,
+      /SequelizeConnectionRefusedError/,
+      /SequelizeHostNotFoundError/,
+      /SequelizeHostNotReachableError/,
+      /SequelizeInvalidConnectionError/,
+      /SequelizeConnectionTimedOutError/
+    ]
+  },
+  // Logging configuration
+  logging: (msg: string) => {
+    if (process.env.DB_LOGGING === 'true') {
+      console.log('🔍 DB Query:', msg);
+    }
+  },
+  dialectOptions: {
+    connectTimeout: 60000 // 60 seconds
+  },
   models: [
     User,
     Session,
@@ -113,8 +142,40 @@ const sequelize = new Sequelize({
     DailyTask,
     AuditLog,
     Webhook
-  ], // Path to your models
-  logging: true // Disable logging (optional, based on your preference)
+  ]
 });
 
-export { sequelize };
+// Database health check - runs every 30 seconds
+let healthCheckInterval: NodeJS.Timeout;
+
+const startHealthCheck = () => {
+  healthCheckInterval = setInterval(async () => {
+    try {
+      await sequelize.authenticate();
+      // Connection is healthy
+    } catch (error: any) {
+      console.error('❌ Database health check failed:', error.message);
+      console.log('🔄 Attempting to reconnect...');
+
+      // Try to reconnect
+      try {
+        await sequelize.close();
+        await sequelize.authenticate();
+        console.log('✅ Database reconnection successful');
+      } catch (reconnectError: any) {
+        console.error('❌ Reconnection failed:', reconnectError.message);
+        // Let error handlers in server.ts handle process restart
+      }
+    }
+  }, 30000); // Check every 30 seconds
+};
+
+// Cleanup function for graceful shutdown
+const stopHealthCheck = () => {
+  if (healthCheckInterval) {
+    clearInterval(healthCheckInterval);
+    console.log('✅ Database health check stopped');
+  }
+};
+
+export { sequelize, startHealthCheck, stopHealthCheck };

@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { loginUser, logoutUser, forgotPassword, resetPassword, checkResetToken, getUserProfile } from './authController';
 import { authenticateUser } from '../middleware/authMiddleware';
+import { cacheMiddleware } from '../middleware/cacheMiddleware';
 
 const router = express.Router();
 
@@ -72,7 +73,7 @@ router.post('/auth/login', loginUser);
  *       500:
  *         description: Server error
  */
-router.get('/auth/me', getUserProfile);
+router.get('/auth/me', cacheMiddleware(300), getUserProfile);
 
 /**
  * @swagger

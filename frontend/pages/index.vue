@@ -3,16 +3,36 @@
   el-tabs.w-full(v-model='selectedTab' @tab-change="tabChange")
 
     el-tab-pane(label='Leads & Sales' name='leadsSales')
-      StatisticsLeadsSales(v-if="selectedTab === 'leadsSales'")
+      Suspense(v-if="selectedTab === 'leadsSales'")
+        template(#default)
+          LazyStatisticsLeadsSales
+        template(#fallback)
+          .flex.justify-center.items-center.py-20
+            el-skeleton(:rows="5" animated)
 
     el-tab-pane(label='Projects & Operations' name='projectsOperations')
-      StatisticsProjectsOperations(v-if="selectedTab === 'projectsOperations'")
+      Suspense(v-if="selectedTab === 'projectsOperations'")
+        template(#default)
+          LazyStatisticsProjectsOperations
+        template(#fallback)
+          .flex.justify-center.items-center.py-20
+            el-skeleton(:rows="5" animated)
 
     el-tab-pane(label='Financial & Business Metrics' name='financialBusinessMetrics')
-      StatisticsFinancialBusinessMetrics(v-if="selectedTab === 'financialBusinessMetrics'")
+      Suspense(v-if="selectedTab === 'financialBusinessMetrics'")
+        template(#default)
+          LazyStatisticsFinancialBusinessMetrics
+        template(#fallback)
+          .flex.justify-center.items-center.py-20
+            el-skeleton(:rows="5" animated)
 
     el-tab-pane(label='Performance & HR' name='performanceHr')
-      StatisticsPerformanceHr(v-if="selectedTab === 'performanceHr'")
+      Suspense(v-if="selectedTab === 'performanceHr'")
+        template(#default)
+          LazyStatisticsPerformanceHr
+        template(#fallback)
+          .flex.justify-center.items-center.py-20
+            el-skeleton(:rows="5" animated)
 </template>
 
 <script setup lang="ts">

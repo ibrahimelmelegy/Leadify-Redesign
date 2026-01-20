@@ -76,7 +76,10 @@ router.post(
  *         description: Internal Server Error
  */
 
-router.get('/', authenticateUser, HasPermission([SettingsPermissionsEnum.VIEW_SETTINGS]), SettingController.getSetting);
+// Cache settings for 10 minutes as they rarely change
+import { cacheMiddleware } from '../middleware/cacheMiddleware';
+
+router.get('/', authenticateUser, HasPermission([SettingsPermissionsEnum.VIEW_SETTINGS]), cacheMiddleware(600), SettingController.getSetting);
 
 //** --------------------- DELETE --------------------- */
 

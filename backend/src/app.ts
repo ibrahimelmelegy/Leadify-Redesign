@@ -1,4 +1,6 @@
 import cors from 'cors';
+import compression from 'compression';
+import helmet from 'helmet';
 import express, { Application, NextFunction, Request, Response } from 'express';
 import i18next from 'i18next';
 import Backend from 'i18next-fs-backend';
@@ -42,6 +44,15 @@ import Webhook from './webhooks/webhookModel';
 const fileUpload = require('express-fileupload');
 
 const app: Application = express();
+
+// Security Headers
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
+
+// Compress all responses
+app.use(compression());
+
 i18next
   .use(Backend)
   .use(middleware.LanguageDetector)

@@ -1,0 +1,24 @@
+{
+    "watch": [
+        "src"
+    ],
+    "ext": "ts,json",
+    "ignore": [
+        "src/**/*.test.ts",
+        "src/**/*.spec.ts",
+        "**/*.log",
+        "**/node_modules/**",
+        "dist/**",
+        "public/uploads/**"
+    ],
+    "exec": "ts-node src/server.ts",
+    "delay": 1000,
+    "verbose": false,
+    "restartable": "rs",
+    "env": {
+        "NODE_ENV": "development"
+    },
+    "events": {
+        "restart": "echo '\n🔄 Server restarting due to file changes...'"
+    }
+}

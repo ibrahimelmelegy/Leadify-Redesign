@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, AllowNull, Default, HasMany, BelongsTo, ForeignKey, BelongsToMany, HasOne } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, AllowNull, Default, HasMany, BelongsTo, ForeignKey, BelongsToMany, HasOne, Index } from 'sequelize-typescript';
 import Opportunity from '../../opportunity/opportunityModel';
 import Deal from '../../deal/model/dealModel';
 import { ProposalModelEnum, ProposalStatusEnum, ProposalTypeEnum } from '../proposalEnum';
@@ -21,6 +21,7 @@ class Proposal extends Model {
   })
   public id!: string;
 
+  @Index
   @Column({
     type: DataType.UUID,
     allowNull: true
@@ -62,6 +63,7 @@ class Proposal extends Model {
   })
   public proposalDate!: Date;
 
+  @Index
   @Column({
     type: DataType.ENUM(...Object.values(ProposalTypeEnum)),
     allowNull: false
@@ -105,6 +107,7 @@ class Proposal extends Model {
   public fileAttachments?: string[];
 
   @Default(ProposalStatusEnum.WAITING_APPROVAL)
+  @Index
   @Column({
     type: DataType.ENUM(...Object.values(ProposalStatusEnum)),
     allowNull: true

@@ -11,7 +11,8 @@
     "experimentalDecorators": true, // Enable decorators
     "emitDecoratorMetadata": true, // Enable metadata reflection
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "moduleResolution": "node"
   },
